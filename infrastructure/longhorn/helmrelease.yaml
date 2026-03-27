@@ -14,5 +14,6 @@ spec:
         namespace: flux-system
   values:
     defaultSettings:
-      defaultReplicaCount: 2
+      defaultReplicaCount: 1
       guaranteedInstanceManagerCPU: 5
+      storageReservedPercentageForDefaultDisk: 10

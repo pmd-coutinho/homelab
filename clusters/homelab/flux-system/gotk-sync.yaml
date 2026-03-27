@@ -10,8 +10,8 @@ spec:
   ref:
     branch: main
   secretRef:
-    name: flux-system
-  url: ssh://git@github.com/pmd-coutinho/homelab
+    name: forgejo-auth
+  url: ssh://git@forgejo-ssh.pedrocoutinho.eu/pmd-coutinho/homelab.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

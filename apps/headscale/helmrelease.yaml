@@ -23,6 +23,12 @@ spec:
               repository: headscale/headscale
               tag: 0.25.1
             args: ["serve"]
+            env:
+              - name: HEADSCALE_DB_PASSWORD
+                valueFrom:
+                  secretKeyRef:
+                    name: headscale-db-secret
+                    key: password
             resources:
               requests:
                 memory: 100Mi
@@ -31,16 +37,16 @@ spec:
                 memory: 256Mi
     persistence:
       config:
-        enabled: true
         type: configMap
         name: headscale-config
         globalMounts:
           - path: /etc/headscale/config.yaml
             subPath: config.yaml
       data:
-        enabled: true
-        storageClass: longhorn
+        type: persistentVolumeClaim
+        accessMode: ReadWriteOnce
         size: 3Gi
+        storageClass: longhorn
         globalMounts:
           - path: /var/lib/headscale
     configMaps:
@@ -86,6 +92,7 @@ spec:
               level: info
     service:
       main:
+        controller: main
         ports:
           http:
             port: 8080

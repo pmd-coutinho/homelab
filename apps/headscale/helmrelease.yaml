@@ -39,14 +39,8 @@ spec:
       data:
         type: persistentVolumeClaim
         accessMode: ReadWriteOnce
-        dataSourceRef: null
-        volumeClaimSpec:
-          accessModes:
-            - ReadWriteOnce
-          storageClassName: longhorn
-          resources:
-            requests:
-              storage: 3Gi
+        size: 3Gi
+        storageClass: longhorn
         globalMounts:
           - path: /var/lib/headscale
     service:

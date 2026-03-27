@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: forgejo
+  namespace: forgejo
+spec:
+  interval: 1h
+  timeout: 10m
+  chart:
+    spec:
+      chart: forgejo
+      sourceRef:
+        kind: HelmRepository
+        name: forgejo
+        namespace: flux-system
+  values:
+    persistence:
+      enabled: true
+      storageClass: longhorn
+      size: 20Gi
+    database:
+      builtIn:
+        postgresql:
+          enabled: false
+    gitea:
+      config:
+        database:
+          DB_TYPE: postgres
+          HOST: homelab-postgres-rw.postgres:5432
+          NAME: forgejo
+          USER: postgres
+        server:
+          DOMAIN: forgejo.pedrocoutinho.eu
+          ROOT_URL: https://forgejo.pedrocoutinho.eu
+          SSH_DOMAIN: forgejo.pedrocoutinho.eu
+          SSH_PORT: 30022
+          SSH_LISTEN_PORT: 22
+      additionalConfigFromEnvs:
+        - name: FORGEJO__database__PASSWD
+          valueFrom:
+            secretKeyRef:
+              name: forgejo-db-secret
+              key: password
+    resources:
+      requests:
+        memory: 200Mi
+        cpu: 100m
+      limits:
+        memory: 400Mi

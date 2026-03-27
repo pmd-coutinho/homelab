@@ -1,0 +1,6 @@
+clusterconfig/
+age.key
+*.sops.yaml
+*.yaml.new
+.env
+kubeconfig

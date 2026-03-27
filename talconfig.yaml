@@ -1,0 +1,60 @@
+clusterName: homelab
+talosVersion: v1.12.6
+kubernetesVersion: v1.35.3
+
+endpoint: https://192.168.50.100:6443
+
+allowSchedulingOnControlPlanes: true
+
+cniConfig:
+  name: none
+
+controlPlane:
+  patches:
+    - |-
+      cluster:
+        proxy:
+          disabled: true
+
+nodes:
+  - hostname: talos-cp
+    ipAddress: 192.168.50.100
+    installDisk: /dev/sda
+    controlPlane: true
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+    networkInterfaces:
+      - interface: ens18
+        dhcp: false
+        addresses:
+          - 192.168.50.100/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.50.1
+        nameservers:
+          - 192.168.50.1
+
+  - hostname: talos-worker
+    ipAddress: 192.168.50.101
+    installDisk: /dev/sda
+    controlPlane: false
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+    networkInterfaces:
+      - interface: ens18
+        dhcp: false
+        addresses:
+          - 192.168.50.101/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.50.1
+        nameservers:
+          - 192.168.50.1

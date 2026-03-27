@@ -10,7 +10,7 @@ spec:
     - match: Host(`headscale.pedrocoutinho.eu`)
       kind: Rule
       services:
-        - name: headscale-main
+        - name: headscale
           port: 8080
   tls:
     secretName: homelab-wildcard-tls

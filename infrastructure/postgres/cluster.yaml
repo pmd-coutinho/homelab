@@ -13,11 +13,8 @@ spec:
       max_connections: "200"
   bootstrap:
     initdb:
-      databases:
-        - forgejo
-        - authelia
-        - headscale
-      owner: postgres
+      database: app
+      owner: app
   resources:
     requests:
       memory: 256Mi

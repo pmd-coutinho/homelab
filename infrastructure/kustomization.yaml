@@ -3,3 +3,7 @@ kind: Kustomization
 resources:
   - helm-repositories.yaml
   - cilium
+  - longhorn
+  - cloudnative-pg
+  - traefik
+  - cert-manager

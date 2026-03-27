@@ -8,7 +8,7 @@ spec:
   timeout: 10m
   chart:
     spec:
-      chart: forgejo
+      chart: forgejo-helm
       sourceRef:
         kind: HelmRepository
         name: forgejo

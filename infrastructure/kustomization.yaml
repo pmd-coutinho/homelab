@@ -4,6 +4,7 @@ resources:
   - helm-repositories.yaml
   - cilium
   - longhorn
+  - snapshot-controller
   - cloudnative-pg
   - traefik
   - cert-manager

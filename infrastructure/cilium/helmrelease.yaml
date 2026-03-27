@@ -1,0 +1,35 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cilium
+  namespace: kube-system
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: cilium
+      sourceRef:
+        kind: HelmRepository
+        name: cilium
+        namespace: flux-system
+  values:
+    ipam:
+      mode: kubernetes
+    kubeProxyReplacement: true
+    k8sServiceHost: 192.168.50.100
+    k8sServicePort: 6443
+    hubble:
+      relay:
+        enabled: true
+      ui:
+        enabled: true
+    l2announcements:
+      enabled: true
+    externalIPs:
+      enabled: true
+    securityContext:
+      privileged: true
+    cgroup:
+      autoMount:
+        enabled: false
+      hostRoot: /sys/fs/cgroup

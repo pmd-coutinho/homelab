@@ -28,7 +28,7 @@ spec:
           DB_TYPE: postgres
           HOST: homelab-postgres-rw.postgres:5432
           NAME: forgejo
-          USER: postgres
+          USER: forgejo
         server:
           DOMAIN: forgejo.pedrocoutinho.eu
           ROOT_URL: https://forgejo.pedrocoutinho.eu

@@ -13,8 +13,10 @@ spec:
       max_connections: "200"
   bootstrap:
     initdb:
-      database: app
-      owner: app
+      database: forgejo
+      owner: forgejo
+      secret:
+        name: pg-password
   resources:
     requests:
       memory: 256Mi

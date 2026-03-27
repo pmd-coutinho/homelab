@@ -1,0 +1,23 @@
+apiVersion: ENC[AES256_GCM,data:QRA=,iv:9IrXFfuI4WC6+Q85B8zj2NohO4FgulTYUdAyVz2YpQM=,tag:dswFL5THOZA7H7EeXDf0uQ==,type:str]
+kind: ENC[AES256_GCM,data:1smnvI4G,iv:Nj3CebiXNkW3/jvkq3jtte8d7eTkVW/KXdh86VGSJpA=,tag:go1VZDWlknA6KZdMY70pOw==,type:str]
+metadata:
+    name: ENC[AES256_GCM,data:BzwW80/h/YDYjMLTJVGVCKfwj7wW,iv:ejVzu7WgJAr+i95ygSGodhq6nmDcxihRArF38sfe/Wk=,tag:UcR3ulFcC1OzAozQGqDniQ==,type:str]
+    namespace: ENC[AES256_GCM,data:aYVUKOfcrgD+,iv:lhKwd+BdEiHiZ/qaHQIvameSUj/rIgZwc1sp0zIOKYo=,tag:2gXbQSoD1GC3YbMjuTo4vw==,type:str]
+type: ENC[AES256_GCM,data:ZPcbOnAF,iv:zplrGnVJZIew/HsHU1qskmIq9EKBKglfGwOMhZwrpqc=,tag:2PEIbvc6a+LfG5OSfZJpHA==,type:str]
+stringData:
+    override.yaml: ENC[AES256_GCM,data:KuzzDdSpbxH6PdfLwjH7p7SZPj7Uw81i8e3FK3J53uvEaUK4JF42LCvhRoA1WDPd5zbSuS3W98S6HjAO6Q6ku3EEruDsccBAKZicDUmvIN42fch57ryc+Glkc2Q3c+kW9Tga/ZqeJqapweyQEJgzSI0PN1RhL29NspzPIIgliz2fTy1u6Yc3YKbjTPR6B/JImjvQBIxSuRFrBooAsjnV+ZKZg8ri8Ozu30zp6pB3Ha1e+NWm,iv:ncMsfIoMdEOXihKBS5en/PGt3LcnsXml7+pj5s9C6eA=,tag:wuxnmN7bfs7GgQL6TGTSfw==,type:str]
+sops:
+    age:
+        - recipient: age1js6ffj7uq2d5ysqcxwlwnrrrwehnpe8jd6yfyhz55wp8tav66f2qyl22ge
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3bFhReXFmNEtSYzNOWEFy
+            OUJ1aEpWTW91bjlDR1RRUTZUb0EwSkIrM0RRClgwM0d6YmNiUitJbThUK3lqU3NT
+            NzlLbTBXZkpGOVVoWXJmNWlGUU9xbkkKLS0tIG42R0VlNzlDUGVaamZzTDQ1cDYw
+            MGpJTjFhdWF1aGFGcm5Od2FCY1NpMnMK3iuhHXxy5YCuIbdssegs1YIaG57quglh
+            7NTnNHDH6+Obc3A2JHlK+AlBZHzQIyuc91Hjjsa0NMdLXkE/ugvQ+A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-03-27T15:45:17Z"
+    mac: ENC[AES256_GCM,data:8sVLjRl8gKf+pUPKCIaThdKMdyaujbqMil4CXwsog5jn+YV9oQedQt3eEHOLARvqyz0up9UNXZ+RMLuVmlpQZFwdluq59Q1qUn3v5LhGQM09RttKp0hza82UbvcqL/ON48snI9sjOKosRafLUyYUSuHhWkOdTlEM5Urtq4zgGzI=,iv:MPVC5+e0TScWAvO3dV7H+32lPTmQ95JfVsBKloxzjGo=,tag:D8vAzUwf29KWItnQae3gPw==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.12.2

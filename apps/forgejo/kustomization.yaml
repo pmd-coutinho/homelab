@@ -5,3 +5,4 @@ resources:
   - db-secret.enc.yaml
   - helmrelease.yaml
   - ingressroute.yaml
+  - ssh-nodeport.yaml

@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: homelab-wildcard
+  namespace: traefik
+spec:
+  secretName: homelab-wildcard-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: "*.pedrocoutinho.eu"
+  dnsNames:
+    - "*.pedrocoutinho.eu"
+    - "pedrocoutinho.eu"

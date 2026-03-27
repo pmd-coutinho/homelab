@@ -6,3 +6,5 @@ resources:
   - helmrelease.yaml
   - ingressroute.yaml
   - ssh-nodeport.yaml
+  - backup-secret.enc.yaml
+  - replicationsource.yaml

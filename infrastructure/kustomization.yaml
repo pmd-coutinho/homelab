@@ -8,3 +8,4 @@ resources:
   - traefik
   - cert-manager
   - postgres
+  - coredns-patch.yaml

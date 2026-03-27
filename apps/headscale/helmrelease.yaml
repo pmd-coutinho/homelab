@@ -1,0 +1,95 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: headscale
+  namespace: headscale
+spec:
+  interval: 1h
+  timeout: 10m
+  chart:
+    spec:
+      chart: app-template
+      version: "3.7.3"
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: headscale/headscale
+              tag: 0.25.1
+            args: ["serve"]
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 50m
+              limits:
+                memory: 256Mi
+    persistence:
+      config:
+        enabled: true
+        type: configMap
+        name: headscale-config
+        globalMounts:
+          - path: /etc/headscale/config.yaml
+            subPath: config.yaml
+      data:
+        enabled: true
+        storageClass: longhorn
+        size: 3Gi
+        globalMounts:
+          - path: /var/lib/headscale
+    configMaps:
+      config:
+        enabled: true
+        data:
+          config.yaml: |
+            server_url: https://headscale.pedrocoutinho.eu
+            listen_addr: 0.0.0.0:8080
+            metrics_listen_addr: 0.0.0.0:9090
+            grpc_listen_addr: 0.0.0.0:50443
+            grpc_allow_insecure: false
+            private_key_path: /var/lib/headscale/private.key
+            noise:
+              private_key_path: /var/lib/headscale/noise_private.key
+            prefixes:
+              v4: 100.64.0.0/10
+              v6: fd7a:115c:a1e0::/48
+            derp:
+              server:
+                enabled: false
+              urls:
+                - https://controlplane.tailscale.com/derpmap/default
+              auto_update_enabled: true
+              update_frequency: 24h
+            disable_check_updates: true
+            ephemeral_node_inactivity_timeout: 30m
+            database:
+              type: postgres
+              postgres:
+                host: homelab-postgres-rw.postgres
+                port: 5432
+                name: headscale
+                user: forgejo
+                password_env: HEADSCALE_DB_PASSWORD
+            dns:
+              magic_dns: true
+              base_domain: hs.pedrocoutinho.eu
+              nameservers:
+                global:
+                  - 192.168.50.2
+            log:
+              level: info
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+          grpc:
+            port: 50443
+          metrics:
+            port: 9090

@@ -1,0 +1,16 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: headscale
+  namespace: headscale
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`headscale.pedrocoutinho.eu`)
+      kind: Rule
+      services:
+        - name: headscale-main
+          port: 8080
+  tls:
+    secretName: homelab-wildcard-tls

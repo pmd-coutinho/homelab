@@ -88,11 +88,13 @@ spec:
   interval: 1h
   url: https://charts.authelia.com
 ---
-apiVersion: source.toolkit.fluxcd.io/v1
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: forgejo
   namespace: flux-system
 spec:
   interval: 1h
-  url: https://forgejo.codeberg.page/forgejo-helm/
+  type: oci
+  url: oci://codeberg.org/forgejo-contrib/forgejo-helm

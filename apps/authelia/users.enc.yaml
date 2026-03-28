@@ -1,0 +1,23 @@
+apiVersion: ENC[AES256_GCM,data:ays=,iv:TaI9FXtEpn/C5EfAaVkRBx8m3xP3IOvFwOnDp5Km/WI=,tag:tg3HH7LA1buOALBgV1uuug==,type:str]
+kind: ENC[AES256_GCM,data:GdC9kRP/,iv:yKdLchVnp5kHOlbb3n8V2mrct3RP+pxkeDwS0CSnjq4=,tag:uju5+vgD0AgAJQxZgDlkIg==,type:str]
+metadata:
+    name: ENC[AES256_GCM,data:sVlAbYBHIzz6I7srg8Q=,iv:5ZoevrrSrlJjni8UZWFEw4B9CzUXa8382hPIWMwqAFo=,tag:LDN8yiD/2ZMPSqJ8e+P9/w==,type:str]
+    namespace: ENC[AES256_GCM,data:ozKN+2HHU58=,iv:gInSjSQYQlZZsNdSE2rE0uu0wLxtRtiE9sQj69L9mrI=,tag:RVeDMHb+33UAZ3jEYflWSQ==,type:str]
+type: ENC[AES256_GCM,data:LyC59dVH,iv:YXtrSrbjPb/OsZNLwM8c1IRJc+RaSReQ1MIsxGKSYTw=,tag:pUMI1j0P+ZmVcw5Yj+jcDA==,type:str]
+data:
+    users.yaml: ENC[AES256_GCM,data:IQfNKBGGM92nULLleFaohXkKBg2x0xpCmROu3GeVvLMYGWRjFjIxuP3e+F/hnG5mkh+54/IEGzSQf9QW81nRq3gL+KOAiDiE6vQENM0ptEEMAWqY31h4hVhSZEnshwnXuX7AofOSESpcZxNtp7k9pibcNIC5F2T1sRq0TELvS7NRU5PrIpLC5S0bItBttG5S6HHFC4y2aRrnRgHAlkQ40rT++u84oPNuGmQArGgDsvEvtVKuehHhMzV9/7lfBIkK65/j/BcW6EwjzAx5MZg7NA9DGmUgrpm78f+Xy6VF805MxwqcGTZ+PjvFMBScE06BnJpdn5VZTBkdt4jGK9HPV05NvXcbreaXwng2Nk8nuEozCdWbhamvOA9CpraSq8vFYmY+ZDpLcyqqzhVpz6MUXQZc6wsNp8/hqG2F25vUa11X1B51Sqjj1StutsF2DsTyugp0Gmrgn2qBSbr8,iv:VIm24NgjcwGWkgBXl2xZxCgQr7qshEbabCW/v+YWgeU=,tag:J4NZibLqGMZ91hDbCpxAvg==,type:str]
+sops:
+    age:
+        - recipient: age1js6ffj7uq2d5ysqcxwlwnrrrwehnpe8jd6yfyhz55wp8tav66f2qyl22ge
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpY0RMc3duRndwNDJwTEJT
+            R1hyZDdkWjNJQSt1clpZOHFFK1lCNENnOGtnCll1eW1IZzNpQU00SlB2RXR4ckVr
+            UmtjM3NZYmdzWVBCeis5S0F5cjRWUFkKLS0tIDkrU0pQRXYvVk1VVkFYNGptZ1Ar
+            anRPa3R4cGp4eEZ4OVNGZVRIcENEOTQKkb7TIHoiMAV3/9VQINcGtzNCWG83NlHe
+            uPxJ1AWXoShoKc9jqr4DZr9L7hr2WyNxL3LlnCvC6vVenyncM2hXWQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-03-28T23:00:20Z"
+    mac: ENC[AES256_GCM,data:eGnheWix/WOpOejOOppHSNiyxIyIMj4muhJhHHYCBStrcNOSIzcVsvXPa0+JikEzbeugV4NZoLAuHx1WRTgyv/5A0Y/B/O2LoFS+a4sZTyKrkZz91I1Tw8cGelyhJ8CsX2vU6UMqz3+0wQ0+xgiGjfLb39dRCoYlI2PmoEsUHAg=,iv:UHGlLB+7pvbF7G4I6kNnqHdbtIgl/0hsB/pw4mUtBEQ=,tag:TAcbox/bszoPPjGeYoZGCw==,type:str]
+    unencrypted_suffix: _unencrypted
+    version: 3.12.2

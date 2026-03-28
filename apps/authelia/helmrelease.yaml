@@ -20,7 +20,7 @@ spec:
       extraVolumes:
         - name: users
           secret:
-            secretName: authelia-secret
+            secretName: authelia-users
             items:
               - key: users.yaml
                 path: users.yaml

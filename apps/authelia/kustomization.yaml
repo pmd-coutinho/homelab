@@ -4,5 +4,6 @@ resources:
   - namespace.yaml
   - secret.enc.yaml
   - oidc-private-key.enc.yaml
+  - oidc-clients.enc.yaml
   - helmrelease.yaml
   - ingressroute.yaml

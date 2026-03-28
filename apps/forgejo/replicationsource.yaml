@@ -14,8 +14,6 @@ spec:
       daily: 7
       weekly: 4
       monthly: 3
-    copyMethod: Snapshot
-    storageClassName: longhorn
-    volumeSnapshotClassName: longhorn-snapshot-vsc
-    cacheCapacity: 2Gi
+    copyMethod: Direct
+    cacheCapacity: 1Gi
     cacheStorageClassName: longhorn

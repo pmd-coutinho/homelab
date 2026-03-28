@@ -49,6 +49,7 @@ spec:
           groups_attribute_path: groups
           name_attribute_path: name
           use_pkce: true
+          use_id_token: true
           role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
         auth:
           disable_login_form: false

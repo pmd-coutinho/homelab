@@ -5,3 +5,5 @@ resources:
   - config.enc.yaml
   - helmrelease.yaml
   - ingressroute.yaml
+  - backup-secret.enc.yaml
+  - replicationsource.yaml

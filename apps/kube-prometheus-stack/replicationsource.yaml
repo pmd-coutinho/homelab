@@ -1,0 +1,23 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: grafana-backup
+  namespace: monitoring
+spec:
+  sourcePVC: kube-prometheus-stack-grafana
+  trigger:
+    schedule: "0 2 * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: grafana-backup-secret
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 3
+    copyMethod: Direct
+    cacheCapacity: 1Gi
+    cacheStorageClassName: longhorn
+    moverSecurityContext:
+      runAsUser: 472
+      runAsGroup: 472
+      fsGroup: 472

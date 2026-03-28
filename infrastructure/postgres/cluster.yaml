@@ -17,6 +17,22 @@ spec:
       owner: forgejo
       secret:
         name: pg-password
+  backup:
+    barmanObjectStore:
+      destinationPath: s3://pmd-homelab-backups/postgres
+      endpointURL: https://s3.eu-central-003.backblazeb2.com
+      s3Credentials:
+        accessKeyId:
+          name: pg-backup-secret
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: pg-backup-secret
+          key: ACCESS_SECRET_KEY
+      wal:
+        compression: gzip
+      data:
+        compression: gzip
+    retentionPolicy: "7d"
   resources:
     requests:
       memory: 256Mi

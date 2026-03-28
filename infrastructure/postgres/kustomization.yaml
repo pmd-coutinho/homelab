@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - cluster.yaml
   - pg-password.enc.yaml
+  - pg-backup-secret.enc.yaml

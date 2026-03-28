@@ -5,3 +5,4 @@ resources:
   - forgejo
   - headscale
   - tailscale
+  - authelia

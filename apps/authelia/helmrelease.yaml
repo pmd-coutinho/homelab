@@ -1,0 +1,126 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: authelia
+  namespace: authelia
+spec:
+  interval: 1h
+  timeout: 10m
+  chart:
+    spec:
+      chart: authelia
+      sourceRef:
+        kind: HelmRepository
+        name: authelia
+        namespace: flux-system
+  values:
+    domain: pedrocoutinho.eu
+    ingress:
+      enabled: false
+    pod:
+      extraVolumes:
+        - name: users-database
+          secret:
+            secretName: authelia-secret
+            items:
+              - key: users_database.yml
+                path: users_database.yml
+        - name: oidc-private-key
+          secret:
+            secretName: authelia-oidc-private-key
+      extraVolumeMounts:
+        - name: users-database
+          mountPath: /config/users_database.yml
+          subPath: users_database.yml
+          readOnly: true
+        - name: oidc-private-key
+          mountPath: /config/oidc.key
+          subPath: private.key
+          readOnly: true
+    configMap:
+      theme: dark
+      authentication_backend:
+        password_reset:
+          disable: true
+        file:
+          path: /config/users_database.yml
+          password:
+            algorithm: argon2id
+      session:
+        name: authelia_session
+        domain: pedrocoutinho.eu
+        remember_me: 30d
+        inactivity: 7d
+        expiration: 1h
+      regulation:
+        max_retries: 5
+        find_time: 2m
+        ban_time: 10m
+      storage:
+        postgres:
+          host: homelab-postgres-rw.postgres
+          port: 5432
+          database: authelia
+          username: forgejo
+          timeout: 5s
+      notifier:
+        disable_startup_check: true
+        filesystem:
+          filename: /tmp/authelia-notifications.txt
+      access_control:
+        default_policy: two_factor
+        rules:
+          - domain: auth.pedrocoutinho.eu
+            policy: bypass
+          - domain: forgejo.pedrocoutinho.eu
+            policy: bypass
+      identity_providers:
+        oidc:
+          hmac_secret: '{{ secret "/config/secrets/OIDC_HMAC_SECRET" }}'
+          issuer_private_key: |
+            {{ secret "/config/oidc.key" | indent 12 }}
+          access_token_lifespan: 1h
+          authorize_code_lifespan: 1m
+          id_token_lifespan: 1h
+          refresh_token_lifespan: 90m
+          clients:
+            - id: grafana
+              description: Grafana
+              secret: '{{ secret "/config/secrets/GRAFANA_CLIENT_SECRET" }}'
+              public: false
+              authorization_policy: two_factor
+              redirect_uris:
+                - https://grafana.pedrocoutinho.eu/login/generic_oauth
+              scopes:
+                - openid
+                - profile
+                - groups
+                - email
+              userinfo_signing_algorithm: none
+            - id: forgejo
+              description: Forgejo
+              secret: '{{ secret "/config/secrets/FORGEJO_CLIENT_SECRET" }}'
+              public: false
+              authorization_policy: two_factor
+              redirect_uris:
+                - https://forgejo.pedrocoutinho.eu/user/oauth2/authelia/callback
+              scopes:
+                - openid
+                - profile
+                - groups
+                - email
+              userinfo_signing_algorithm: none
+    secret:
+      existingSecret: authelia-secret
+      jwt:
+        key: JWT_TOKEN
+      session:
+        key: SESSION_ENCRYPTION_KEY
+      storageEncryptionKey:
+        key: STORAGE_ENCRYPTION_KEY
+      storage:
+        key: STORAGE_PASSWORD
+      oidcHMACSecret:
+        key: OIDC_HMAC_SECRET
+      oidcPrivateKey:
+        key: ""

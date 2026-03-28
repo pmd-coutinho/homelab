@@ -61,7 +61,6 @@ spec:
         cookies:
           - subdomain: auth
             domain: pedrocoutinho.eu
-            default_redirection_url: https://auth.pedrocoutinho.eu
       regulation:
         max_retries: 5
         find_time: 2m

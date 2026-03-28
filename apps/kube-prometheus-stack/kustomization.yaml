@@ -5,3 +5,4 @@ resources:
   - helmrelease.yaml
   - backup-secret.enc.yaml
   - replicationsource.yaml
+  - grafana-oidc-secret.enc.yaml

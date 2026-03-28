@@ -5,6 +5,7 @@ metadata:
   namespace: monitoring
 spec:
   interval: 1h
+  timeout: 15m
   chart:
     spec:
       chart: kube-prometheus-stack
@@ -28,10 +29,30 @@ spec:
         enabled: true
         storageClassName: longhorn
         size: 2Gi
+      envFromSecret: grafana-oidc-secret
       grafana.ini:
         server:
           domain: grafana.pedrocoutinho.eu
           root_url: https://grafana.pedrocoutinho.eu
+        auth.generic_oauth:
+          enabled: true
+          name: Authelia
+          icon: signin
+          client_id: grafana
+          client_secret: $__env{GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET}
+          scopes: openid profile email groups
+          empty_scopes: false
+          auth_url: https://auth.pedrocoutinho.eu/api/oidc/authorization
+          token_url: https://auth.pedrocoutinho.eu/api/oidc/token
+          api_url: https://auth.pedrocoutinho.eu/api/oidc/userinfo
+          login_attribute_path: preferred_username
+          groups_attribute_path: groups
+          name_attribute_path: name
+          use_pkce: true
+          role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
+        auth:
+          disable_login_form: false
+          oauth_auto_login: true
     alertmanager:
       alertmanagerSpec:
         storage:

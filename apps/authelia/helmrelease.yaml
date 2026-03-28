@@ -14,24 +14,23 @@ spec:
         name: authelia
         namespace: flux-system
   values:
-    domain: pedrocoutinho.eu
-    ingress:
-      enabled: false
     pod:
+      kind: Deployment
+      replicas: 1
       extraVolumes:
-        - name: users-database
+        - name: users
           secret:
             secretName: authelia-secret
             items:
-              - key: users_database.yml
-                path: users_database.yml
+              - key: users.yaml
+                path: users.yaml
         - name: oidc-private-key
           secret:
             secretName: authelia-oidc-private-key
       extraVolumeMounts:
-        - name: users-database
-          mountPath: /config/users_database.yml
-          subPath: users_database.yml
+        - name: users
+          mountPath: /config/users.yaml
+          subPath: users.yaml
           readOnly: true
         - name: oidc-private-key
           mountPath: /config/oidc.key
@@ -43,29 +42,30 @@ spec:
         password_reset:
           disable: true
         file:
-          path: /config/users_database.yml
-          password:
-            algorithm: argon2id
+          enabled: true
+          path: /config/users.yaml
       session:
-        name: authelia_session
-        domain: pedrocoutinho.eu
-        remember_me: 30d
-        inactivity: 7d
-        expiration: 1h
+        cookies:
+          - domain: pedrocoutinho.eu
+            authelia_url: https://auth.pedrocoutinho.eu
+            remember_me: 30d
+            inactivity: 7d
+            expiration: 1h
       regulation:
         max_retries: 5
         find_time: 2m
         ban_time: 10m
       storage:
         postgres:
-          host: homelab-postgres-rw.postgres
-          port: 5432
+          enabled: true
+          address: tcp://homelab-postgres-rw.postgres:5432
           database: authelia
           username: forgejo
           timeout: 5s
       notifier:
         disable_startup_check: true
         filesystem:
+          enabled: true
           filename: /tmp/authelia-notifications.txt
       access_control:
         default_policy: two_factor
@@ -76,17 +76,18 @@ spec:
             policy: bypass
       identity_providers:
         oidc:
-          hmac_secret: '{{ secret "/config/secrets/OIDC_HMAC_SECRET" }}'
-          issuer_private_key: |
-            {{ secret "/config/oidc.key" | indent 12 }}
-          access_token_lifespan: 1h
-          authorize_code_lifespan: 1m
-          id_token_lifespan: 1h
-          refresh_token_lifespan: 90m
+          enabled: true
+          jwks:
+            - key_id: main
+              algorithm: RS256
+              use: sig
+              key:
+                path: /config/oidc.key
           clients:
-            - id: grafana
-              description: Grafana
-              secret: '{{ secret "/config/secrets/GRAFANA_CLIENT_SECRET" }}'
+            - client_id: grafana
+              client_name: Grafana
+              client_secret:
+                path: /config/secrets/GRAFANA_CLIENT_SECRET
               public: false
               authorization_policy: two_factor
               redirect_uris:
@@ -96,10 +97,11 @@ spec:
                 - profile
                 - groups
                 - email
-              userinfo_signing_algorithm: none
-            - id: forgejo
-              description: Forgejo
-              secret: '{{ secret "/config/secrets/FORGEJO_CLIENT_SECRET" }}'
+              userinfo_signed_response_alg: none
+            - client_id: forgejo
+              client_name: Forgejo
+              client_secret:
+                path: /config/secrets/FORGEJO_CLIENT_SECRET
               public: false
               authorization_policy: two_factor
               redirect_uris:
@@ -109,18 +111,6 @@ spec:
                 - profile
                 - groups
                 - email
-              userinfo_signing_algorithm: none
+              userinfo_signed_response_alg: none
     secret:
       existingSecret: authelia-secret
-      jwt:
-        key: JWT_TOKEN
-      session:
-        key: SESSION_ENCRYPTION_KEY
-      storageEncryptionKey:
-        key: STORAGE_ENCRYPTION_KEY
-      storage:
-        key: STORAGE_PASSWORD
-      oidcHMACSecret:
-        key: OIDC_HMAC_SECRET
-      oidcPrivateKey:
-        key: ""

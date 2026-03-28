@@ -17,3 +17,7 @@ spec:
     copyMethod: Direct
     cacheCapacity: 1Gi
     cacheStorageClassName: longhorn
+    moverSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000

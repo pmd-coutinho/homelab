@@ -13,7 +13,7 @@ spec:
         - name: authelia
           namespace: traefik
       services:
-        - name: headplane-main
+        - name: headplane
           port: 3000
   tls:
     secretName: homelab-wildcard-tls

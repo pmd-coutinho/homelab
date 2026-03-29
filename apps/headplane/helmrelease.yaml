@@ -1,0 +1,44 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: headplane
+  namespace: headplane
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      version: "3.7.3"
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/tale/headplane
+              tag: 0.6.2
+            env:
+              HEADSCALE_URL: http://headscale.headscale.svc.cluster.local:8080
+              HEADPLANE_HOST: 0.0.0.0
+              HEADPLANE_PORT: "3000"
+              HEADSCALE_API_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: headplane-secret
+                    key: HEADSCALE_API_KEY
+            resources:
+              requests:
+                memory: 64Mi
+                cpu: 50m
+              limits:
+                memory: 128Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 3000

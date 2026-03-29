@@ -9,3 +9,4 @@ resources:
   - monitoring-ingress
   - longhorn-ingress
   - hubble-ingress
+  - headplane

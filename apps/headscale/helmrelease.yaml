@@ -21,7 +21,7 @@ spec:
           main:
             image:
               repository: headscale/headscale
-              tag: 0.25.1
+              tag: 0.26.1
             args: ["serve"]
             resources:
               requests:

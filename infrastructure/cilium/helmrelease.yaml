@@ -31,7 +31,6 @@ spec:
           - dns
           - drop
           - tcp
-          - flow
           - icmp
           - http
         serviceMonitor:

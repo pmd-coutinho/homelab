@@ -86,6 +86,10 @@ spec:
         rules:
           - domain: auth.pedrocoutinho.eu
             policy: bypass
+          - domain: wiki.pedrocoutinho.eu
+            resources:
+              - "^/-/api/v1/pull/.*$"
+            policy: bypass
           - domain: forgejo.pedrocoutinho.eu
             policy: bypass
           - domain: headplane.pedrocoutinho.eu

@@ -29,11 +29,13 @@ spec:
           HOST: homelab-postgres-rw.postgres:5432
           NAME: forgejo
           USER: forgejo
+        webhook:
+          ALLOWED_HOST_LIST: "192.168.50.50"
         server:
           DOMAIN: forgejo.pedrocoutinho.eu
           ROOT_URL: https://forgejo.pedrocoutinho.eu
-          SSH_DOMAIN: forgejo.pedrocoutinho.eu
-          SSH_PORT: 30022
+          SSH_DOMAIN: forgejo-ssh.pedrocoutinho.eu
+          SSH_PORT: 22
           SSH_LISTEN_PORT: 22
       additionalConfigFromEnvs:
         - name: FORGEJO__database__PASSWD

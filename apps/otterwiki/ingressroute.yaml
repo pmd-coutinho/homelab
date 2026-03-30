@@ -1,0 +1,18 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: otterwiki
+  namespace: otterwiki
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`wiki.pedrocoutinho.eu`)
+      kind: Rule
+      middlewares:
+        - name: authelia
+          namespace: traefik
+      services:
+        - name: otterwiki
+          port: 8080
+  tls: {}

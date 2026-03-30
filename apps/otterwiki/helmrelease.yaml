@@ -30,8 +30,8 @@ spec:
               ATTACHMENT_ACCESS: REGISTERED
               ADMIN_ACCESS: ADMIN
               AUTO_APPROVAL: "true"
-              PROXY_HEADER_NAME: Remote-User
-              PROXY_HEADER_EMAIL: Remote-Email
+              AUTH_HEADERS_USERNAME: Remote-Name
+              AUTH_HEADERS_EMAIL: Remote-Email
             resources:
               requests:
                 memory: 64Mi

@@ -3,11 +3,9 @@ kind: Kustomization
 resources:
   - kube-prometheus-stack
   - forgejo
-  - headscale
   - tailscale
   - authelia
   - monitoring-ingress
   - longhorn-ingress
   - hubble-ingress
-  - headplane
   - otterwiki

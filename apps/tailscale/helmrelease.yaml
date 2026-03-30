@@ -27,7 +27,7 @@ spec:
               TS_STATE_DIR: /var/lib/tailscale
               TS_HOSTNAME: homelab-subnet-router
               TS_ROUTES: "192.168.50.0/24"
-              TS_EXTRA_ARGS: "--login-server=https://headscale.pedrocoutinho.eu --accept-routes"
+              TS_EXTRA_ARGS: "--accept-routes"
               TS_AUTHKEY:
                 valueFrom:
                   secretKeyRef:

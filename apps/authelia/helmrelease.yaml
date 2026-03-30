@@ -92,8 +92,6 @@ spec:
             policy: bypass
           - domain: forgejo.pedrocoutinho.eu
             policy: bypass
-          - domain: headplane.pedrocoutinho.eu
-            policy: bypass
       identity_providers:
         oidc:
           enabled: true
@@ -132,16 +130,4 @@ spec:
                 - groups
                 - email
               userinfo_signed_response_alg: none
-            - client_id: headplane
-              client_name: Headplane
-              client_secret:
-                path: /config/oidc-clients/HEADPLANE_CLIENT_SECRET
-              public: false
-              authorization_policy: two_factor
-              redirect_uris:
-                - https://headplane.pedrocoutinho.eu/admin/oidc/callback
-              scopes:
-                - openid
-                - profile
-                - email
               userinfo_signed_response_alg: none

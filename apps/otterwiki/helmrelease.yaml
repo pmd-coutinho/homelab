@@ -30,8 +30,9 @@ spec:
               ATTACHMENT_ACCESS: REGISTERED
               ADMIN_ACCESS: ADMIN
               AUTO_APPROVAL: "true"
-              AUTH_HEADERS_USERNAME: Remote-Name
+              AUTH_HEADERS_USERNAME: Remote-User
               AUTH_HEADERS_EMAIL: Remote-Email
+              AUTH_HEADERS_PERMISSIONS: ""
             resources:
               requests:
                 memory: 64Mi

@@ -15,5 +15,4 @@ spec:
       services:
         - name: hubble-ui
           port: 80
-  tls:
-    secretName: homelab-wildcard-tls
+  tls: {}

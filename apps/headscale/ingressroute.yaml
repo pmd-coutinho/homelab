@@ -12,5 +12,4 @@ spec:
       services:
         - name: headscale
           port: 8080
-  tls:
-    secretName: homelab-wildcard-tls
+  tls: {}

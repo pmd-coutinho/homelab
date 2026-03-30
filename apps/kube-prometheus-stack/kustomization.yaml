@@ -6,3 +6,5 @@ resources:
   - backup-secret.enc.yaml
   - replicationsource.yaml
   - grafana-oidc-secret.enc.yaml
+  - volsync-rules.yaml
+  - cluster-rules.yaml

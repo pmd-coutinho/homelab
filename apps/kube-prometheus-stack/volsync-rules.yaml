@@ -1,0 +1,18 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: volsync-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: volsync
+      rules:
+        - alert: VolsyncReplicationFailed
+          expr: |
+            (time() - volsync_volume_out_of_sync_duration_seconds) > 129600
+          for: 10m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Volsync backup failed for {{ $labels.obj_name }}"
+            description: "ReplicationSource {{ $labels.obj_namespace }}/{{ $labels.obj_name }} has not completed a successful sync in over 36 hours."

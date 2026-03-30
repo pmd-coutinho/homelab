@@ -20,6 +20,10 @@ spec:
             entryPoint:
               to: websecure
               scheme: https
+    metrics:
+      prometheus:
+        serviceMonitor:
+          enabled: true
     providers:
       kubernetesCRD:
         allowCrossNamespace: true

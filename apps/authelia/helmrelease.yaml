@@ -48,6 +48,11 @@ spec:
     secret:
       existingSecret: authelia-secret
     configMap:
+      telemetry:
+        metrics:
+          enabled: true
+          serviceMonitor:
+            enabled: true
       theme: dark
       authentication_backend:
         password_reset:

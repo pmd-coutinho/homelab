@@ -1,0 +1,36 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cluster-alerts
+  namespace: monitoring
+spec:
+  groups:
+    - name: cluster-general
+      rules:
+        - alert: PVCNearlyFull
+          expr: |
+            (kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes) > 0.85
+          for: 15m
+          labels:
+            severity: warning
+          annotations:
+            summary: "PVC {{ $labels.persistentvolumeclaim }} is over 85% full"
+            description: "PVC {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is {{ $value | humanizePercentage }} full."
+        - alert: PVCCriticallyFull
+          expr: |
+            (kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes) > 0.95
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "PVC {{ $labels.persistentvolumeclaim }} is over 95% full"
+            description: "PVC {{ $labels.namespace }}/{{ $labels.persistentvolumeclaim }} is {{ $value | humanizePercentage }} full. Immediate action required."
+        - alert: PodRestartLoop
+          expr: |
+            increase(kube_pod_container_status_restarts_total[1h]) > 5
+          for: 10m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Pod {{ $labels.pod }} restarting frequently"
+            description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} has restarted {{ $value | humanize }} times in the last hour."

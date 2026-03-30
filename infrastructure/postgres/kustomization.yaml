@@ -6,3 +6,4 @@ resources:
   - pg-password.enc.yaml
   - pg-backup-secret.enc.yaml
   - scheduled-backup.yaml
+  - cnpg-rules.yaml

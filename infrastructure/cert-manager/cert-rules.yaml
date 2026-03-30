@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cert-manager-alerts
+  namespace: cert-manager
+spec:
+  groups:
+    - name: cert-manager
+      rules:
+        - alert: CertificateExpiringSoon
+          expr: |
+            certmanager_certificate_expiration_timestamp_seconds - time() < 604800
+          for: 1h
+          labels:
+            severity: warning
+          annotations:
+            summary: "Certificate {{ $labels.name }} expiring in less than 7 days"
+            description: "Certificate {{ $labels.namespace }}/{{ $labels.name }} expires soon. Check cert-manager logs and Cloudflare API token validity."
+        - alert: CertificateNotReady
+          expr: |
+            certmanager_certificate_ready_status{condition="True"} != 1
+          for: 30m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Certificate {{ $labels.name }} not ready"
+            description: "Certificate {{ $labels.namespace }}/{{ $labels.name }} has been in a non-ready state for 30 minutes. HTTPS may break when the current cert expires."

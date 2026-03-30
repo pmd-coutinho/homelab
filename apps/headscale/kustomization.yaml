@@ -7,3 +7,4 @@ resources:
   - ingressroute.yaml
   - backup-secret.enc.yaml
   - replicationsource.yaml
+  - servicemonitor.yaml

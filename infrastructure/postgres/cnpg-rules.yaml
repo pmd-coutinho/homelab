@@ -1,0 +1,36 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cnpg-alerts
+  namespace: postgres
+spec:
+  groups:
+    - name: cnpg
+      rules:
+        - alert: CNPGWALArchivingFailed
+          expr: |
+            cnpg_pg_stat_archiver_failed_count > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "CNPG WAL archiving failures on {{ $labels.cluster }}"
+            description: "Cluster {{ $labels.namespace }}/{{ $labels.cluster }} has {{ $value }} failed WAL archives. Barman backups may be incomplete."
+        - alert: CNPGLastArchivedWALTooOld
+          expr: |
+            (time() - cnpg_pg_stat_archiver_last_archived_time) > 3600
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "CNPG WAL archiving stale on {{ $labels.cluster }}"
+            description: "Last WAL archived over 1 hour ago for {{ $labels.namespace }}/{{ $labels.cluster }}."
+        - alert: CNPGScheduledBackupMissing
+          expr: |
+            (time() - cnpg_last_available_backup_timestamp) > 129600
+          for: 10m
+          labels:
+            severity: critical
+          annotations:
+            summary: "CNPG scheduled backup missing for {{ $labels.cluster }}"
+            description: "No backup completed in the last 36 hours for {{ $labels.namespace }}/{{ $labels.cluster }}. Daily backups are scheduled at 03:00."

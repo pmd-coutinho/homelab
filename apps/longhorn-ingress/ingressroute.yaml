@@ -15,5 +15,4 @@ spec:
       services:
         - name: longhorn-frontend
           port: 80
-  tls:
-    secretName: homelab-wildcard-tls
+  tls: {}

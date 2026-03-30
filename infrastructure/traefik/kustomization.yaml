@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - helmrelease.yaml
   - authelia-middleware.yaml
+  - default-tls-store.yaml

@@ -1,0 +1,9 @@
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: otterwiki-permissions
+  namespace: otterwiki
+spec:
+  headers:
+    customRequestHeaders:
+      X-Otterwiki-Permissions: "READ,WRITE,UPLOAD,ADMIN"

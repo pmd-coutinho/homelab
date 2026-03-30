@@ -12,6 +12,8 @@ spec:
       middlewares:
         - name: authelia
           namespace: traefik
+        - name: otterwiki-permissions
+          namespace: otterwiki
       services:
         - name: otterwiki
           port: 8080

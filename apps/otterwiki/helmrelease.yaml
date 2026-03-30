@@ -32,7 +32,7 @@ spec:
               AUTO_APPROVAL: "true"
               AUTH_HEADERS_USERNAME: Remote-User
               AUTH_HEADERS_EMAIL: Remote-Email
-              AUTH_HEADERS_PERMISSIONS: ""
+              AUTH_HEADERS_PERMISSIONS: X-Otterwiki-Permissions
             resources:
               requests:
                 memory: 64Mi

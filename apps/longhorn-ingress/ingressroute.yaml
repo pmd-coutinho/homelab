@@ -15,4 +15,6 @@ spec:
       services:
         - name: longhorn-frontend
           port: 80
-  tls: {}
+  tls:
+    store:
+      name: default

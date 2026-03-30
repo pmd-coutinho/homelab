@@ -12,4 +12,6 @@ spec:
       services:
         - name: headscale
           port: 8080
-  tls: {}
+  tls:
+    store:
+      name: default

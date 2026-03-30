@@ -15,4 +15,6 @@ spec:
       services:
         - name: otterwiki
           port: 8080
-  tls: {}
+  tls:
+    store:
+      name: default

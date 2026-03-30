@@ -9,9 +9,6 @@ spec:
   routes:
     - match: Host(`headplane.pedrocoutinho.eu`)
       kind: Rule
-      middlewares:
-        - name: authelia
-          namespace: traefik
       services:
         - name: headplane
           port: 3000

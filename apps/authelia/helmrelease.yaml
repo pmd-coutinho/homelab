@@ -130,4 +130,3 @@ spec:
                 - groups
                 - email
               userinfo_signed_response_alg: none
-              userinfo_signed_response_alg: none

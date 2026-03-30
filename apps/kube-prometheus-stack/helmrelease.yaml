@@ -84,6 +84,13 @@ spec:
         auth:
           disable_login_form: false
           oauth_auto_login: true
+    kube-state-metrics:
+      resources:
+        requests:
+          memory: 64Mi
+          cpu: 50m
+        limits:
+          memory: 128Mi
     alertmanager:
       alertmanagerSpec:
         resources:

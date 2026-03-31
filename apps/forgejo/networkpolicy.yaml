@@ -5,21 +5,6 @@ metadata:
   namespace: forgejo
 spec:
   endpointSelector: {}
-  ingress:
-    - fromEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: traefik
-    - fromEndpoints:
-        - matchLabels:
-            k8s:io.kubernetes.pod.namespace: monitoring
-    - fromEntities:
-        - world
-        - host
-        - remote-node
-      toPorts:
-        - ports:
-            - port: "22"
-              protocol: TCP
   egress:
     - toEndpoints:
         - matchLabels:

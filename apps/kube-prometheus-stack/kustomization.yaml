@@ -9,5 +9,4 @@ resources:
   - telegram-secret.enc.yaml
   - volsync-rules.yaml
   - cluster-rules.yaml
-  - networkpolicy.yaml
   - pdb.yaml

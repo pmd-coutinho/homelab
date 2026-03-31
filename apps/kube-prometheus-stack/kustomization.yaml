@@ -6,6 +6,7 @@ resources:
   - backup-secret.enc.yaml
   - replicationsource.yaml
   - grafana-oidc-secret.enc.yaml
+  - telegram-secret.enc.yaml
   - volsync-rules.yaml
   - cluster-rules.yaml
   - networkpolicy.yaml

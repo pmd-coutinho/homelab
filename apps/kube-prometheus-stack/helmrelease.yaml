@@ -96,7 +96,22 @@ spec:
         limits:
           memory: 128Mi
     alertmanager:
+      config:
+        route:
+          receiver: telegram
+          group_by: ['alertname', 'namespace']
+          group_wait: 30s
+          group_interval: 5m
+          repeat_interval: 4h
+        receivers:
+          - name: telegram
+            telegram_configs:
+              - bot_token_file: /etc/alertmanager/secrets/alertmanager-telegram/bot-token
+                chat_id: 8754437443
+                send_resolved: true
       alertmanagerSpec:
+        secrets:
+          - alertmanager-telegram
         nodeSelector:
           kubernetes.io/hostname: talos-worker
         resources:

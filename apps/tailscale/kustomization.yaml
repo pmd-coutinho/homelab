@@ -4,5 +4,4 @@ resources:
   - namespace.yaml
   - auth-secret.enc.yaml
   - helmrelease.yaml
-  - networkpolicy.yaml
   - pdb.yaml

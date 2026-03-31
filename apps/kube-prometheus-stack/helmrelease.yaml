@@ -25,6 +25,8 @@ spec:
             cpu: 200m
           limits:
             memory: 1536Mi
+        nodeSelector:
+          kubernetes.io/hostname: talos-worker
         retention: 15d
         storageSpec:
           volumeClaimTemplate:
@@ -34,12 +36,14 @@ spec:
                 requests:
                   storage: 10Gi
     grafana:
+      nodeSelector:
+        kubernetes.io/hostname: talos-worker
       resources:
         requests:
           memory: 200Mi
           cpu: 100m
         limits:
-          memory: 384Mi
+          memory: 512Mi
       sidecar:
         dashboards:
           resources:
@@ -93,6 +97,8 @@ spec:
           memory: 128Mi
     alertmanager:
       alertmanagerSpec:
+        nodeSelector:
+          kubernetes.io/hostname: talos-worker
         resources:
           requests:
             memory: 64Mi

@@ -8,5 +8,3 @@ resources:
   - ssh-nodeport.yaml
   - backup-secret.enc.yaml
   - replicationsource.yaml
-  - networkpolicy.yaml
-  - pdb.yaml

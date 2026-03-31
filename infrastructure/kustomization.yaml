@@ -11,4 +11,3 @@ resources:
   - postgres
   - volsync
   - coredns-patch.yaml
-  - network-policies

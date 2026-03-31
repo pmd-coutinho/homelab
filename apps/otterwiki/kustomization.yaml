@@ -5,5 +5,3 @@ resources:
   - helmrelease.yaml
   - permissions-middleware.yaml
   - ingressroute.yaml
-  - networkpolicy.yaml
-  - pdb.yaml

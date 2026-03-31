@@ -7,5 +7,3 @@ resources:
   - pg-backup-secret.enc.yaml
   - scheduled-backup.yaml
   - cnpg-rules.yaml
-  - networkpolicy.yaml
-  - pdb.yaml

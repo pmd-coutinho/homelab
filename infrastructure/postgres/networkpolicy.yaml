@@ -11,6 +11,8 @@ spec:
             k8s:io.kubernetes.pod.namespace: forgejo
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: authelia
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: vaultwarden
       toPorts:
         - ports:
             - port: "5432"

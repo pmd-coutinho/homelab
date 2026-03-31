@@ -8,3 +8,5 @@ resources:
   - grafana-oidc-secret.enc.yaml
   - volsync-rules.yaml
   - cluster-rules.yaml
+  - networkpolicy.yaml
+  - pdb.yaml

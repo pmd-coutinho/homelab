@@ -1,0 +1,10 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: homelab-postgres
+  namespace: postgres
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      cnpg.io/cluster: homelab-postgres

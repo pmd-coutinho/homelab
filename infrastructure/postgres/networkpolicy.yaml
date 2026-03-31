@@ -1,0 +1,29 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: postgres-ingress
+  namespace: postgres
+spec:
+  endpointSelector:
+    matchLabels:
+      cnpg.io/cluster: homelab-postgres
+  ingress:
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: forgejo
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: authelia
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+    - fromEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: cnpg-system
+  egress:
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP

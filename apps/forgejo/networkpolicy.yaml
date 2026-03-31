@@ -1,0 +1,23 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: forgejo-egress
+  namespace: forgejo
+spec:
+  endpointSelector: {}
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: postgres
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "80"
+              protocol: TCP

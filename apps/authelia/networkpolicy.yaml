@@ -1,0 +1,15 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: authelia-egress
+  namespace: authelia
+spec:
+  endpointSelector: {}
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            k8s:io.kubernetes.pod.namespace: postgres
+      toPorts:
+        - ports:
+            - port: "5432"
+              protocol: TCP

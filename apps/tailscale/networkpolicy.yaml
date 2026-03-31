@@ -1,0 +1,16 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: tailscale-egress
+  namespace: tailscale
+spec:
+  endpointSelector: {}
+  egress:
+    - toEntities:
+        - world
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+            - port: "3478"
+              protocol: UDP

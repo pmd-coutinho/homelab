@@ -9,3 +9,4 @@ resources:
   - longhorn-ingress
   - hubble-ingress
   - otterwiki
+  - vaultwarden

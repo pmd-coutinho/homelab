@@ -5,7 +5,6 @@ resources:
   - secret.enc.yaml
   - helmrelease.yaml
   - ingressroute.yaml
-  - networkpolicy.yaml
   - backup-secret.enc.yaml
   - replicationsource.yaml
   - pdb.yaml

@@ -8,5 +8,4 @@ resources:
   - oidc-clients.enc.yaml
   - helmrelease.yaml
   - ingressroute.yaml
-  - networkpolicy.yaml
   - pdb.yaml

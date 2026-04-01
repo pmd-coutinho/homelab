@@ -28,6 +28,7 @@ spec:
         enabled: false
     prometheus:
       prometheusSpec:
+        externalUrl: https://prometheus.pedrocoutinho.eu
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
@@ -125,6 +126,7 @@ spec:
                 chat_id: 371232688
                 send_resolved: true
       alertmanagerSpec:
+        externalUrl: https://alertmanager.pedrocoutinho.eu
         secrets:
           - alertmanager-telegram
         nodeSelector:

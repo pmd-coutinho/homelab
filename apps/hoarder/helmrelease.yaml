@@ -32,6 +32,7 @@ spec:
               NEXTAUTH_URL: https://hoarder.pedrocoutinho.eu
               MEILI_ADDR: http://localhost:7700
               BROWSER_WEB_URL: http://localhost:9222
+              DATA_DIR: /data
               DISABLE_SIGNUPS: "false"
               OAUTH_PROVIDER_NAME: Authelia
               OAUTH_CLIENT_ID: hoarder
@@ -41,11 +42,6 @@ spec:
                   secretKeyRef:
                     name: hoarder-secret
                     key: NEXTAUTH_SECRET
-              DATABASE_URL:
-                valueFrom:
-                  secretKeyRef:
-                    name: hoarder-secret
-                    key: DATABASE_URL
               MEILI_MASTER_KEY:
                 valueFrom:
                   secretKeyRef:

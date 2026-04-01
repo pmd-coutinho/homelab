@@ -136,6 +136,7 @@ spec:
                 path: /config/oidc-clients/HOARDER_CLIENT_SECRET
               public: false
               authorization_policy: two_factor
+              token_endpoint_auth_method: client_secret_basic
               redirect_uris:
                 - https://hoarder.pedrocoutinho.eu/api/auth/callback/custom
               scopes:

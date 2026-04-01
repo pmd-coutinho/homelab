@@ -62,7 +62,7 @@ data:
         - Wiki:
             href: https://wiki.pedrocoutinho.eu
             description: OtterWiki
-            icon: otterwiki
+            icon: mdi-notebook-edit
         - Hoarder:
             href: https://hoarder.pedrocoutinho.eu
             description: Bookmarks

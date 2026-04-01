@@ -111,6 +111,15 @@ spec:
         limits:
           memory: 128Mi
     alertmanager:
+      templateFiles:
+        telegram.tmpl: |-
+          {{ "{{" }} define "telegram.message" {{ "}}" }}
+          {{ "{{" }} if eq .Status "firing" {{ "}}" }}🔥 <b>Firing</b>{{ "{{" }} else {{ "}}" }}✅ <b>Resolved</b>{{ "{{" }} end {{ "}}" }}
+          {{ "{{" }} range .Alerts {{ "}}" }}
+          <b>{{ "{{" }} .Labels.alertname {{ "}}" }}</b> [{{ "{{" }} .Labels.severity {{ "}}" }}]
+          {{ "{{" }} if .Annotations.summary {{ "}}" }}{{ "{{" }} .Annotations.summary {{ "}}" }}{{ "{{" }} end {{ "}}" }}
+          {{ "{{" }} end {{ "}}" }}
+          {{ "{{" }} end {{ "}}" }}
       config:
         route:
           receiver: telegram
@@ -124,6 +133,8 @@ spec:
             telegram_configs:
               - bot_token_file: /etc/alertmanager/secrets/alertmanager-telegram/bot-token
                 chat_id: 371232688
+                parse_mode: HTML
+                message: '{{ "{{" }} template "telegram.message" . {{ "}}" }}'
                 send_resolved: true
       alertmanagerSpec:
         externalUrl: https://alertmanager.pedrocoutinho.eu

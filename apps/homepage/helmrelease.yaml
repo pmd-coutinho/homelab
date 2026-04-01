@@ -16,6 +16,8 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          serviceAccountName: homepage
         containers:
           main:
             image:

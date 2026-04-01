@@ -16,3 +16,5 @@ spec:
               protocol: UDP
             - port: "53"
               protocol: TCP
+    - toEntities:
+        - kube-apiserver

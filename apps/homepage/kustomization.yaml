@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - configmap.yaml
+  - rbac.yaml
   - helmrelease.yaml
   - ingressroute.yaml
   - networkpolicy.yaml

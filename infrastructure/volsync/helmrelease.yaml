@@ -12,3 +12,6 @@ spec:
         kind: HelmRepository
         name: backube
         namespace: flux-system
+  values:
+    metrics:
+      disableAuth: true

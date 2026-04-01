@@ -29,7 +29,7 @@ spec:
               MEILI_ADDR: http://localhost:7700
               BROWSER_WEB_URL: http://localhost:9222
               DATA_DIR: /data
-              DISABLE_SIGNUPS: "false"
+              DISABLE_SIGNUPS: "true"
               OAUTH_PROVIDER_NAME: Authelia
               OAUTH_CLIENT_ID: hoarder
               OAUTH_SCOPE: "openid email profile"

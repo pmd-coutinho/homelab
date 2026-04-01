@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-config
+  namespace: homepage
+data:
+  settings.yaml: |
+    title: Homelab
+    theme: dark
+    color: slate
+    headerStyle: clean
+    layout:
+      Infrastructure:
+        style: row
+        columns: 3
+      Monitoring:
+        style: row
+        columns: 3
+      Applications:
+        style: row
+        columns: 3
+
+  services.yaml: |
+    - Infrastructure:
+        - Forgejo:
+            href: https://forgejo.pedrocoutinho.eu
+            description: Git hosting
+            icon: forgejo
+        - Authelia:
+            href: https://auth.pedrocoutinho.eu
+            description: Authentication
+            icon: authelia
+        - Vaultwarden:
+            href: https://vaultwarden.pedrocoutinho.eu
+            description: Password manager
+            icon: vaultwarden
+        - Longhorn:
+            href: https://longhorn.pedrocoutinho.eu
+            description: Storage
+            icon: longhorn
+    - Monitoring:
+        - Grafana:
+            href: https://grafana.pedrocoutinho.eu
+            description: Dashboards
+            icon: grafana
+        - Prometheus:
+            href: https://prometheus.pedrocoutinho.eu
+            description: Metrics
+            icon: prometheus
+        - AlertManager:
+            href: https://alertmanager.pedrocoutinho.eu
+            description: Alerts
+            icon: alertmanager
+        - Hubble:
+            href: https://hubble.pedrocoutinho.eu
+            description: Network observability
+            icon: cilium
+    - Applications:
+        - Wiki:
+            href: https://wiki.pedrocoutinho.eu
+            description: OtterWiki
+            icon: otterwiki
+        - Hoarder:
+            href: https://hoarder.pedrocoutinho.eu
+            description: Bookmarks
+            icon: hoarder
+
+  bookmarks.yaml: |
+    []
+
+  widgets.yaml: |
+    - search:
+        provider: google
+        target: _blank

@@ -130,3 +130,16 @@ spec:
                 - groups
                 - email
               userinfo_signed_response_alg: none
+            - client_id: hoarder
+              client_name: Hoarder
+              client_secret:
+                path: /config/oidc-clients/HOARDER_CLIENT_SECRET
+              public: false
+              authorization_policy: two_factor
+              redirect_uris:
+                - https://hoarder.pedrocoutinho.eu/api/auth/callback/custom
+              scopes:
+                - openid
+                - profile
+                - email
+              userinfo_signed_response_alg: none

@@ -1,0 +1,19 @@
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: hoarder-backup
+  namespace: hoarder
+spec:
+  sourcePVC: hoarder-data
+  trigger:
+    schedule: "0 2 * * *"
+  restic:
+    pruneIntervalDays: 7
+    repository: hoarder-backup-secret
+    retain:
+      daily: 7
+      weekly: 4
+      monthly: 3
+    copyMethod: Direct
+    cacheCapacity: 500Mi
+    cacheStorageClassName: longhorn

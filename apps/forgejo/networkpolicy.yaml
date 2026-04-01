@@ -25,6 +25,8 @@ spec:
               protocol: TCP
     - toEntities:
         - world
+        - host
+        - remote-node
       toPorts:
         - ports:
             - port: "443"

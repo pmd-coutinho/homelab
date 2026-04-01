@@ -14,6 +14,15 @@ spec:
         name: prometheus-community
         namespace: flux-system
   values:
+    defaultRules:
+      disabled:
+        KubeProxyDown: true
+    kubeProxy:
+      enabled: false
+    kubeControllerManager:
+      enabled: false
+    kubeScheduler:
+      enabled: false
     prometheusOperator:
       admissionWebhooks:
         enabled: false
@@ -88,6 +97,8 @@ spec:
           use_pkce: true
           use_id_token: true
           role_attribute_path: contains(groups[*], 'admins') && 'Admin' || 'Viewer'
+          auto_assign_org_role: true
+          allow_assign_grafana_admin: true
         auth:
           disable_login_form: false
           oauth_auto_login: true

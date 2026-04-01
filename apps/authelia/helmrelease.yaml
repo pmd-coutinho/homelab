@@ -143,3 +143,4 @@ spec:
                 - profile
                 - email
               userinfo_signed_response_alg: none
+              id_token_signed_response_alg: RS256

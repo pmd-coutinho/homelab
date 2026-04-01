@@ -15,20 +15,6 @@ data:
             class error
         }
         prometheus :9153
-        hosts {
-            10.106.24.77 auth.pedrocoutinho.eu
-            10.106.24.77 grafana.pedrocoutinho.eu
-            10.106.24.77 forgejo.pedrocoutinho.eu
-            10.106.24.77 wiki.pedrocoutinho.eu
-            10.106.24.77 hoarder.pedrocoutinho.eu
-            10.106.24.77 vaultwarden.pedrocoutinho.eu
-            10.106.24.77 pedrocoutinho.eu
-            10.106.24.77 prometheus.pedrocoutinho.eu
-            10.106.24.77 alertmanager.pedrocoutinho.eu
-            10.106.24.77 longhorn.pedrocoutinho.eu
-            10.106.24.77 hubble.pedrocoutinho.eu
-            fallthrough
-        }
         kubernetes cluster.local in-addr.arpa ip6.arpa {
             pods insecure
             fallthrough in-addr.arpa ip6.arpa

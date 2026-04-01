@@ -32,6 +32,7 @@ spec:
               DISABLE_SIGNUPS: "false"
               OAUTH_PROVIDER_NAME: Authelia
               OAUTH_CLIENT_ID: hoarder
+              OAUTH_SCOPE: "openid email profile"
               OAUTH_WELLKNOWN_URL: https://auth.pedrocoutinho.eu/.well-known/openid-configuration
               NEXTAUTH_SECRET:
                 valueFrom:

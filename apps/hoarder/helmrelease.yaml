@@ -19,10 +19,6 @@ spec:
         pod:
           nodeSelector:
             kubernetes.io/hostname: talos-worker
-          hostAliases:
-            - ip: "10.106.24.77"
-              hostnames:
-                - "auth.pedrocoutinho.eu"
         containers:
           main:
             image:

@@ -31,7 +31,7 @@ spec:
               DISABLE_SIGNUPS: "false"
               OAUTH_PROVIDER_NAME: Authelia
               OAUTH_CLIENT_ID: hoarder
-              OAUTH_WELLKNOWN_URL: https://auth.pedrocoutinho.eu/.well-known/openid-configuration
+              OAUTH_WELLKNOWN_URL: http://authelia.authelia.svc.cluster.local/.well-known/openid-configuration
               NEXTAUTH_SECRET:
                 valueFrom:
                   secretKeyRef:

@@ -5,7 +5,7 @@ metadata:
   namespace: homepage
 data:
   kubernetes.yaml: |
-    mode: cluster
+    mode: disabled
 
   settings.yaml: |
     title: Homelab
@@ -75,18 +75,6 @@ data:
               href: https://forgejo.pedrocoutinho.eu/pmd-coutinho/homelab
 
   widgets.yaml: |
-    - kubernetes:
-        cluster:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
-          label: homelab
-        nodes:
-          show: true
-          cpu: true
-          memory: true
-          showLabel: true
     - search:
         provider: google
         target: _blank

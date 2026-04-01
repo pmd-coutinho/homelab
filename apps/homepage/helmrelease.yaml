@@ -14,10 +14,10 @@ spec:
         name: bjw-s
         namespace: flux-system
   values:
+    serviceAccount:
+      name: homepage
     controllers:
       main:
-        pod:
-          serviceAccountName: homepage
         containers:
           main:
             image:

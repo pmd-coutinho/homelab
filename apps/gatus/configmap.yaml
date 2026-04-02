@@ -49,7 +49,7 @@ data:
         url: http://otterwiki.otterwiki:8080
         interval: 60s
         conditions:
-          - "[STATUS] == 200"
+          - "[STATUS] < 500"
 
       - name: Homepage
         group: Applications

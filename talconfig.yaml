@@ -27,6 +27,7 @@ nodes:
           officialExtensions:
             - siderolabs/iscsi-tools
             - siderolabs/util-linux-tools
+            - siderolabs/nfs-utils
     networkInterfaces:
       - interface: ens18
         dhcp: false
@@ -48,6 +49,7 @@ nodes:
           officialExtensions:
             - siderolabs/iscsi-tools
             - siderolabs/util-linux-tools
+            - siderolabs/nfs-utils
     networkInterfaces:
       - interface: ens18
         dhcp: false

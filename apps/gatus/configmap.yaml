@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatus-config
+  namespace: gatus
+data:
+  config.yaml: |
+    alerting:
+      telegram:
+        token: ${TELEGRAM_TOKEN}
+        id: "371232688"
+        default-alert:
+          enabled: true
+          failure-threshold: 3
+          success-threshold: 2
+          send-on-resolved: true
+
+    endpoints:
+      - name: Forgejo
+        group: Applications
+        url: http://forgejo-http.forgejo:3000
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Authelia
+        group: Infrastructure
+        url: http://authelia.authelia:80
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Vaultwarden
+        group: Applications
+        url: http://vaultwarden.vaultwarden:80
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Hoarder
+        group: Applications
+        url: http://hoarder.hoarder:3000
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: OtterWiki
+        group: Applications
+        url: http://otterwiki.otterwiki:8080
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Homepage
+        group: Applications
+        url: http://homepage.homepage:3000
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Grafana
+        group: Monitoring
+        url: http://kube-prometheus-stack-grafana.monitoring:80
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Prometheus
+        group: Monitoring
+        url: http://kube-prometheus-stack-prometheus.monitoring:9090/-/healthy
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: AlertManager
+        group: Monitoring
+        url: http://kube-prometheus-stack-alertmanager.monitoring:9093/-/healthy
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Longhorn
+        group: Infrastructure
+        url: http://longhorn-frontend.longhorn-system:80
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
+      - name: Hubble UI
+        group: Infrastructure
+        url: http://hubble-ui.kube-system:80
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"

@@ -1,0 +1,215 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: verify-forgejo
+  namespace: backup-verify
+spec:
+  schedule: "0 4 * * 0"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: restic
+              image: restic/restic:0.18.0
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  echo "Verifying forgejo backup..."
+                  restic -r "$RESTIC_REPOSITORY" snapshots --latest 1 && \
+                  restic -r "$RESTIC_REPOSITORY" check --read-data-subset=5% && \
+                  echo "Verification passed."
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: RESTIC_REPOSITORY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: FORGEJO_REPO
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: FORGEJO_PASSWORD
+              resources:
+                requests:
+                  memory: 64Mi
+                  cpu: 50m
+                limits:
+                  memory: 256Mi
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: verify-grafana
+  namespace: backup-verify
+spec:
+  schedule: "10 4 * * 0"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: restic
+              image: restic/restic:0.18.0
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  echo "Verifying grafana backup..."
+                  restic -r "$RESTIC_REPOSITORY" snapshots --latest 1 && \
+                  restic -r "$RESTIC_REPOSITORY" check --read-data-subset=5% && \
+                  echo "Verification passed."
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: RESTIC_REPOSITORY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: GRAFANA_REPO
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: GRAFANA_PASSWORD
+              resources:
+                requests:
+                  memory: 64Mi
+                  cpu: 50m
+                limits:
+                  memory: 256Mi
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: verify-vaultwarden
+  namespace: backup-verify
+spec:
+  schedule: "20 4 * * 0"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: restic
+              image: restic/restic:0.18.0
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  echo "Verifying vaultwarden backup..."
+                  restic -r "$RESTIC_REPOSITORY" snapshots --latest 1 && \
+                  restic -r "$RESTIC_REPOSITORY" check --read-data-subset=5% && \
+                  echo "Verification passed."
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: RESTIC_REPOSITORY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: VAULTWARDEN_REPO
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: VAULTWARDEN_PASSWORD
+              resources:
+                requests:
+                  memory: 64Mi
+                  cpu: 50m
+                limits:
+                  memory: 256Mi
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: verify-hoarder
+  namespace: backup-verify
+spec:
+  schedule: "30 4 * * 0"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 1
+      template:
+        spec:
+          restartPolicy: Never
+          containers:
+            - name: restic
+              image: restic/restic:0.18.0
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  echo "Verifying hoarder backup..."
+                  restic -r "$RESTIC_REPOSITORY" snapshots --latest 1 && \
+                  restic -r "$RESTIC_REPOSITORY" check --read-data-subset=5% && \
+                  echo "Verification passed."
+              env:
+                - name: AWS_ACCESS_KEY_ID
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_ACCESS_KEY_ID
+                - name: AWS_SECRET_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: AWS_SECRET_ACCESS_KEY
+                - name: RESTIC_REPOSITORY
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: HOARDER_REPO
+                - name: RESTIC_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: backup-verify-secrets
+                      key: HOARDER_PASSWORD
+              resources:
+                requests:
+                  memory: 64Mi
+                  cpu: 50m
+                limits:
+                  memory: 256Mi

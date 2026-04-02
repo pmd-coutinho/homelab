@@ -9,4 +9,5 @@ resources:
   - telegram-secret.enc.yaml
   - volsync-rules.yaml
   - cluster-rules.yaml
+  - grafana-loki-datasource.yaml
   - pdb.yaml

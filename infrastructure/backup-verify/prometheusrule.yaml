@@ -1,0 +1,27 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: backup-verify-alerts
+  namespace: backup-verify
+spec:
+  groups:
+    - name: backup-verification
+      rules:
+        - alert: BackupVerificationFailed
+          expr: |
+            kube_job_status_failed{namespace="backup-verify"} > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Backup verification failed for {{ $labels.job_name }}"
+            description: "The backup verification CronJob {{ $labels.job_name }} has failed. Check restic repository integrity."
+        - alert: BackupVerificationMissing
+          expr: |
+            time() - kube_cronjob_status_last_successful_time{namespace="backup-verify"} > 691200
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "Backup verification hasn't run in 8+ days"
+            description: "CronJob {{ $labels.cronjob }} in backup-verify namespace hasn't completed successfully in over 8 days."

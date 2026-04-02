@@ -48,6 +48,8 @@ data:
         group: Applications
         url: http://otterwiki.otterwiki:8080
         interval: 60s
+        client:
+          ignore-redirect: true
         conditions:
           - "[STATUS] < 500"
 

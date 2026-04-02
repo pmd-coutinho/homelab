@@ -18,6 +18,15 @@ spec:
       name: homepage
     controllers:
       main:
+        initContainers:
+          copy-config:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - cp /configmap/* /config/
         containers:
           main:
             image:
@@ -42,15 +51,15 @@ spec:
         type: emptyDir
         globalMounts:
           - path: /app/config
-      config-files:
+        advancedMounts:
+          main:
+            copy-config:
+              - path: /config
+      configmap:
         type: configMap
         name: homepage-config
-        globalMounts:
-          - path: /app/config/settings.yaml
-            subPath: settings.yaml
-          - path: /app/config/services.yaml
-            subPath: services.yaml
-          - path: /app/config/bookmarks.yaml
-            subPath: bookmarks.yaml
-          - path: /app/config/widgets.yaml
-            subPath: widgets.yaml
+        advancedMounts:
+          main:
+            copy-config:
+              - path: /configmap
+                readOnly: true

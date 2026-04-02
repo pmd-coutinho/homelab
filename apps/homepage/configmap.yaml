@@ -54,6 +54,10 @@ data:
             href: https://alertmanager.pedrocoutinho.eu
             description: Alerts
             icon: alertmanager
+        - Gatus:
+            href: https://gatus.pedrocoutinho.eu
+            description: Uptime monitoring
+            icon: gatus
         - Hubble:
             href: https://hubble.pedrocoutinho.eu
             description: Network observability

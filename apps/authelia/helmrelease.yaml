@@ -63,6 +63,11 @@ spec:
       session:
         expiration: 1h
         inactivity: 7d
+        postgres:
+          enabled: true
+          address: tcp://homelab-postgres-rw.postgres:5432
+          database: authelia
+          username: forgejo
         cookies:
           - subdomain: auth
             domain: pedrocoutinho.eu

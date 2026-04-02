@@ -4,7 +4,7 @@ metadata:
   name: hoarder-backup
   namespace: hoarder
 spec:
-  sourcePVC: hoarder-data
+  sourcePVC: hoarder-data-nfs
   trigger:
     schedule: "0 2 * * *"
   restic:

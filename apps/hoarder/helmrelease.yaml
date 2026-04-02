@@ -29,6 +29,7 @@ spec:
               MEILI_ADDR: http://localhost:7700
               BROWSER_WEB_URL: http://localhost:9222
               DATA_DIR: /data
+              CRAWLER_FULL_PAGE_ARCHIVE: "true"
               DISABLE_SIGNUPS: "true"
               OAUTH_PROVIDER_NAME: Authelia
               OAUTH_CLIENT_ID: hoarder
@@ -102,10 +103,7 @@ spec:
             port: 3000
     persistence:
       data:
-        type: persistentVolumeClaim
-        accessMode: ReadWriteOnce
-        size: 5Gi
-        storageClass: longhorn
+        existingClaim: hoarder-data-nfs
         globalMounts:
           - path: /data
       meili-data:

@@ -39,12 +39,10 @@ spec:
           cpu: 100m
         limits:
           memory: 512Mi
-      nodeSelector:
-        kubernetes.io/hostname: talos-worker
       persistence:
         enabled: true
         storageClass: longhorn
-        size: 10Gi
+        size: 5Gi
     gateway:
       enabled: false
     backend:

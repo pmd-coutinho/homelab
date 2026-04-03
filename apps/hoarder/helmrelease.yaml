@@ -55,10 +55,10 @@ spec:
                     key: OAUTH_CLIENT_SECRET
             resources:
               requests:
-                memory: 256Mi
+                memory: 512Mi
                 cpu: 100m
               limits:
-                memory: 512Mi
+                memory: 1Gi
           meilisearch:
             image:
               repository: getmeili/meilisearch

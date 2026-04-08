@@ -9,9 +9,7 @@ spec:
   interval: 1m0s
   ref:
     branch: main
-  secretRef:
-    name: forgejo-auth
-  url: ssh://git@forgejo-ssh.pedrocoutinho.eu/pmd-coutinho/homelab.git
+  url: https://github.com/pmd-coutinho/homelab.git
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization

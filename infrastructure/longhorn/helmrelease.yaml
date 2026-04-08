@@ -13,6 +13,9 @@ spec:
         name: longhorn
         namespace: flux-system
   values:
+    persistence:
+      defaultClass: true
+      defaultClassReplicaCount: 2
     metrics:
       serviceMonitor:
         enabled: true
@@ -31,6 +34,6 @@ spec:
         limits:
           memory: 128Mi
     defaultSettings:
-      defaultReplicaCount: 1
+      defaultReplicaCount: 2
       guaranteedInstanceManagerCPU: 5
       storageReservedPercentageForDefaultDisk: 10

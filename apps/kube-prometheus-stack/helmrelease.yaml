@@ -151,7 +151,7 @@ spec:
         storage:
           volumeClaimTemplate:
             spec:
-              storageClassName: longhorn
+              storageClassName: longhorn-single
               resources:
                 requests:
                   storage: 1Gi

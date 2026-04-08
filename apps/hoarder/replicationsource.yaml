@@ -16,4 +16,4 @@ spec:
       monthly: 3
     copyMethod: Direct
     cacheCapacity: 500Mi
-    cacheStorageClassName: longhorn
+    cacheStorageClassName: longhorn-single

@@ -106,6 +106,32 @@ spec:
     kube-state-metrics:
       nodeSelector:
         kubernetes.io/hostname: talos-worker
+      startupProbe:
+        httpGet:
+          path: /livez
+          port: http
+          scheme: HTTP
+        failureThreshold: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
+      readinessProbe:
+        httpGet:
+          path: /readyz
+          port: metrics
+          scheme: HTTP
+        failureThreshold: 6
+        initialDelaySeconds: 10
+        periodSeconds: 10
+        timeoutSeconds: 5
+      livenessProbe:
+        httpGet:
+          path: /livez
+          port: http
+          scheme: HTTP
+        failureThreshold: 6
+        initialDelaySeconds: 30
+        periodSeconds: 10
+        timeoutSeconds: 5
       resources:
         requests:
           memory: 64Mi

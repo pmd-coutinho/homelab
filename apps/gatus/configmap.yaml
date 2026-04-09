@@ -44,6 +44,13 @@ data:
         conditions:
           - "[STATUS] == 200"
 
+      - name: Paperless
+        group: Applications
+        url: http://paperless.paperless:8000
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
       - name: OtterWiki
         group: Applications
         url: http://otterwiki.otterwiki:8080

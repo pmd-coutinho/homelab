@@ -6,22 +6,19 @@ metadata:
 spec:
   instances: 2
   storage:
-    size: 20Gi
+    size: 10Gi
     storageClass: longhorn
   postgresql:
     parameters:
       max_connections: "200"
   bootstrap:
-    initdb:
-      database: forgejo
-      owner: forgejo
-      secret:
-        name: pg-password
+    recovery:
+      source: homelab-postgres-v3
   backup:
     barmanObjectStore:
       destinationPath: s3://pmd-homelab-backups/postgres
       endpointURL: https://s3.eu-central-003.backblazeb2.com
-      serverName: homelab-postgres-v3
+      serverName: homelab-postgres-v4
       s3Credentials:
         accessKeyId:
           name: pg-backup-secret
@@ -34,6 +31,23 @@ spec:
       data:
         compression: gzip
     retentionPolicy: "7d"
+  externalClusters:
+    - name: homelab-postgres-v3
+      barmanObjectStore:
+        destinationPath: s3://pmd-homelab-backups/postgres
+        endpointURL: https://s3.eu-central-003.backblazeb2.com
+        serverName: homelab-postgres-v3
+        s3Credentials:
+          accessKeyId:
+            name: pg-backup-secret
+            key: ACCESS_KEY_ID
+          secretAccessKey:
+            name: pg-backup-secret
+            key: ACCESS_SECRET_KEY
+        wal:
+          compression: gzip
+        data:
+          compression: gzip
   resources:
     requests:
       memory: 256Mi

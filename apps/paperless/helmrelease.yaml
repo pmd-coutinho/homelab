@@ -1,0 +1,181 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: paperless
+  namespace: paperless
+spec:
+  interval: 1h
+  chart:
+    spec:
+      chart: app-template
+      version: "3.7.3"
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+  values:
+    controllers:
+      main:
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: talos-worker
+        initContainers:
+          init-storage:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - mkdir -p /storage/consume /storage/data /storage/export /storage/media
+        containers:
+          main:
+            image:
+              repository: ghcr.io/paperless-ngx/paperless-ngx
+              tag: latest
+            env:
+              PAPERLESS_URL: https://paperless.pedrocoutinho.eu
+              PAPERLESS_TIME_ZONE: Europe/Lisbon
+              PAPERLESS_REDIS: redis://127.0.0.1:6379
+              PAPERLESS_DBHOST: homelab-postgres-rw.postgres
+              PAPERLESS_DBPORT: "5432"
+              PAPERLESS_DBNAME: paperless
+              PAPERLESS_DBUSER: forgejo
+              PAPERLESS_DBPASS:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secret
+                    key: PAPERLESS_DBPASS
+              PAPERLESS_SECRET_KEY:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secret
+                    key: PAPERLESS_SECRET_KEY
+              PAPERLESS_ADMIN_USER:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secret
+                    key: PAPERLESS_ADMIN_USER
+              PAPERLESS_ADMIN_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secret
+                    key: PAPERLESS_ADMIN_PASSWORD
+              PAPERLESS_ADMIN_MAIL: pedrocoutinho@gmail.com
+              PAPERLESS_APPS: allauth.socialaccount.providers.openid_connect
+              PAPERLESS_SOCIALACCOUNT_PROVIDERS:
+                valueFrom:
+                  secretKeyRef:
+                    name: paperless-secret
+                    key: PAPERLESS_SOCIALACCOUNT_PROVIDERS
+              PAPERLESS_TIKA_ENABLED: "1"
+              PAPERLESS_TIKA_ENDPOINT: http://127.0.0.1:9998
+              PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://127.0.0.1:3000
+              PAPERLESS_BIND_ADDR: 0.0.0.0
+              PAPERLESS_CONSUMPTION_DIR: /usr/src/paperless/consume
+              PAPERLESS_DATA_DIR: /usr/src/paperless/data
+              PAPERLESS_EXPORT_DIR: /usr/src/paperless/export
+              PAPERLESS_MEDIA_ROOT: /usr/src/paperless/media
+              PAPERLESS_CONSUMER_POLLING: "60"
+              PAPERLESS_CONSUMER_RECURSIVE: "true"
+              PAPERLESS_OCR_LANGUAGE: por+eng
+              PAPERLESS_OCR_LANGUAGES: por
+            probes:
+              liveness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8000
+                  initialDelaySeconds: 60
+                  periodSeconds: 15
+                  timeoutSeconds: 5
+                  failureThreshold: 6
+              readiness:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8000
+                  initialDelaySeconds: 20
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 6
+              startup:
+                enabled: true
+                custom: true
+                spec:
+                  httpGet:
+                    path: /
+                    port: 8000
+                  periodSeconds: 10
+                  timeoutSeconds: 5
+                  failureThreshold: 30
+            resources:
+              requests:
+                memory: 768Mi
+                cpu: 100m
+              limits:
+                memory: 2Gi
+          redis:
+            image:
+              repository: redis
+              tag: 7-alpine
+            args:
+              - --save
+              - ""
+              - --appendonly
+              - "no"
+            resources:
+              requests:
+                memory: 32Mi
+                cpu: 25m
+              limits:
+                memory: 128Mi
+          gotenberg:
+            image:
+              repository: gotenberg/gotenberg
+              tag: "8"
+            resources:
+              requests:
+                memory: 128Mi
+                cpu: 50m
+              limits:
+                memory: 512Mi
+          tika:
+            image:
+              repository: apache/tika
+              tag: latest
+            resources:
+              requests:
+                memory: 128Mi
+                cpu: 50m
+              limits:
+                memory: 512Mi
+    service:
+      main:
+        controller: main
+        ports:
+          http:
+            port: 8000
+    persistence:
+      data:
+        type: persistentVolumeClaim
+        accessMode: ReadWriteMany
+        size: 100Gi
+        storageClass: nfs
+        advancedMounts:
+          main:
+            init-storage:
+              - path: /storage
+            main:
+              - path: /usr/src/paperless/consume
+                subPath: consume
+              - path: /usr/src/paperless/data
+                subPath: data
+              - path: /usr/src/paperless/export
+                subPath: export
+              - path: /usr/src/paperless/media
+                subPath: media

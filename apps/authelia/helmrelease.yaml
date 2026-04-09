@@ -145,3 +145,24 @@ spec:
                 - email
               userinfo_signed_response_alg: none
               id_token_signed_response_alg: RS256
+            - client_id: paperless
+              client_name: Paperless
+              client_secret:
+                path: /config/oidc-clients/PAPERLESS_CLIENT_SECRET
+              public: false
+              authorization_policy: two_factor
+              require_pkce: true
+              pkce_challenge_method: S256
+              token_endpoint_auth_method: client_secret_basic
+              redirect_uris:
+                - https://paperless.pedrocoutinho.eu/accounts/oidc/authelia/login/callback/
+              scopes:
+                - openid
+                - profile
+                - email
+                - groups
+              response_types:
+                - code
+              grant_types:
+                - authorization_code
+              userinfo_signed_response_alg: none

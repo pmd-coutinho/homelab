@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: paperless
+  namespace: paperless
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`paperless.pedrocoutinho.eu`)
+      kind: Rule
+      services:
+        - name: paperless
+          port: 8000
+  tls:
+    store:
+      name: default

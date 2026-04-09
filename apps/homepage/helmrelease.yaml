@@ -18,6 +18,9 @@ spec:
       name: homepage
     controllers:
       main:
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: talos-worker
         initContainers:
           copy-config:
             image:

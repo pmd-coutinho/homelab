@@ -39,7 +39,7 @@ spec:
               HOMEPAGE_ALLOWED_HOSTS: pedrocoutinho.eu,homepage.homepage,homepage.homepage.svc.cluster.local
             resources:
               requests:
-                memory: 64Mi
+                memory: 32Mi
                 cpu: 50m
               limits:
                 memory: 256Mi

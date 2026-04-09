@@ -36,7 +36,7 @@ spec:
               repository: ghcr.io/gethomepage/homepage
               tag: latest
             env:
-              HOMEPAGE_ALLOWED_HOSTS: pedrocoutinho.eu
+              HOMEPAGE_ALLOWED_HOSTS: pedrocoutinho.eu,homepage.homepage,homepage.homepage.svc.cluster.local
             resources:
               requests:
                 memory: 128Mi

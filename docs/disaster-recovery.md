@@ -204,13 +204,13 @@ kubectl scale deploy/<app> -n <ns> --replicas=1
 
 ## Phase 5: Post-Restore Manual Steps (~10 min)
 
-### 5.1 Switch Flux source back to Forgejo
-Once Forgejo is healthy:
+### 5.1 Keep Flux source on GitHub
+After recovery, ensure Flux keeps tracking the GitHub repository:
 ```bash
-flux create source git homelab \
-  --url=ssh://git@forgejo-ssh.pedrocoutinho.eu/pmd-coutinho/homelab.git \
+flux create source git flux-system \
+  --url=https://github.com/pmd-coutinho/homelab.git \
   --branch=main \
-  --secret-ref=forgejo-auth
+  --interval=1m
 ```
 
 ### 5.2 Tailscale

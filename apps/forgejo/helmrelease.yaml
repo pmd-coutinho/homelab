@@ -6,6 +6,8 @@ metadata:
 spec:
   interval: 1h
   timeout: 10m
+  driftDetection:
+    mode: enabled
   chart:
     spec:
       chart: forgejo
@@ -14,6 +16,7 @@ spec:
         name: forgejo
         namespace: flux-system
   values:
+    replicaCount: 1
     persistence:
       enabled: true
       storageClass: longhorn

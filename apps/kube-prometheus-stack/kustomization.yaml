@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - helmrelease.yaml
+  - networkpolicy.yaml
   - backup-secret.enc.yaml
   - replicationsource.yaml
   - grafana-oidc-secret.enc.yaml

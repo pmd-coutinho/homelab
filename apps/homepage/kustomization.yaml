@@ -6,4 +6,5 @@ resources:
   - rbac.yaml
   - helmrelease.yaml
   - ingressroute.yaml
+  - networkpolicy.yaml
   - pdb.yaml

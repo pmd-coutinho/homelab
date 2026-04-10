@@ -50,3 +50,9 @@ spec:
         - ports:
             - port: "443"
               protocol: TCP
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP

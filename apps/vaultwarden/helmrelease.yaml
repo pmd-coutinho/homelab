@@ -19,6 +19,9 @@ spec:
     controllers:
       main:
         replicas: 1
+        pod:
+          nodeSelector:
+            kubernetes.io/hostname: talos-worker
         containers:
           main:
             image:

@@ -13,12 +13,12 @@ spec:
       max_connections: "200"
   bootstrap:
     recovery:
-      source: homelab-postgres-v3
+      source: homelab-postgres-source
   backup:
     barmanObjectStore:
       destinationPath: s3://pmd-homelab-backups/postgres
       endpointURL: https://s3.eu-central-003.backblazeb2.com
-      serverName: homelab-postgres-v4
+      serverName: homelab-postgres-v5
       s3Credentials:
         accessKeyId:
           name: pg-backup-secret
@@ -32,11 +32,11 @@ spec:
         compression: gzip
     retentionPolicy: "7d"
   externalClusters:
-    - name: homelab-postgres-v3
+    - name: homelab-postgres-source
       barmanObjectStore:
         destinationPath: s3://pmd-homelab-backups/postgres
         endpointURL: https://s3.eu-central-003.backblazeb2.com
-        serverName: homelab-postgres-v3
+        serverName: homelab-postgres
         s3Credentials:
           accessKeyId:
             name: pg-backup-secret

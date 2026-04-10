@@ -14,6 +14,8 @@ spec:
   bootstrap:
     recovery:
       source: homelab-postgres-source
+      recoveryTarget:
+        backupID: "20260410T210301"
   backup:
     barmanObjectStore:
       destinationPath: s3://pmd-homelab-backups/postgres

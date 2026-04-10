@@ -51,6 +51,8 @@ spec:
             - port: "443"
               protocol: TCP
     - toEntities:
+        - cluster
+    - toEntities:
         - kube-apiserver
       toPorts:
         - ports:

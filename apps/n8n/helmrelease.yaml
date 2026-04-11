@@ -59,6 +59,8 @@ spec:
               WEBHOOK_URL: https://n8n-webhook.pedrocoutinho.eu
               N8N_PROXY_HOPS: "1"
               N8N_SECURE_COOKIE: "true"
+              N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "true"
+              N8N_RUNNERS_ENABLED: "true"
               TZ: Europe/Lisbon
               GENERIC_TIMEZONE: Europe/Lisbon
               N8N_DIAGNOSTICS_ENABLED: "false"

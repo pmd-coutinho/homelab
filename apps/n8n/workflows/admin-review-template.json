@@ -1,0 +1,46 @@
+{
+  "name": "Starter - Daily Admin Review",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { workflow: 'daily-admin-review', timezone: 'Europe/Lisbon', checklist: ['Review overnight Telegram alerts', 'Check Gatus and Grafana for unresolved failures', 'Review Paperless inbox and uncategorized documents', 'Confirm backup jobs completed successfully'], note: 'Set the trigger cadence you want, then add Telegram, email, or task-manager delivery nodes.' } }];"
+      },
+      "id": "build-checklist",
+      "name": "Build Checklist",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Build Checklist",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "pinData": {},
+  "versionId": "ae44ff22-90bb-4bbf-8e67-112233445566"
+}

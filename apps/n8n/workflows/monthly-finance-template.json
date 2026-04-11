@@ -1,0 +1,46 @@
+{
+  "name": "Starter - Monthly Finance Review",
+  "active": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "schedule-trigger",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        260,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { workflow: 'monthly-finance-review', checklist: ['Reconcile account balances in Actual Budget', 'Review recurring bills and subscriptions', 'Check upcoming large expenses', 'Prepare savings and transfer actions for the month'], note: 'Keep this disabled until you wire your preferred notification channel and finance data source.' } }];"
+      },
+      "id": "build-review",
+      "name": "Build Review Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        300
+      ]
+    }
+  ],
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Build Review Payload",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {},
+  "pinData": {},
+  "versionId": "bc55ff33-01cc-4cc0-9f78-223344556677"
+}

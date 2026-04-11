@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - cluster.yaml
+  - n8n-database.yaml
   - networkpolicy.yaml
   - pg-password.enc.yaml
   - pg-backup-secret.enc.yaml

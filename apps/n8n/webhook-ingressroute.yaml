@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: n8n-webhook
+  namespace: n8n
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`n8n-webhook.pedrocoutinho.eu`)
+      kind: Rule
+      services:
+        - name: n8n
+          port: 5678
+  tls:
+    store:
+      name: default

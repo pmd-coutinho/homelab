@@ -75,6 +75,10 @@ data:
             href: https://hoarder.pedrocoutinho.eu
             description: Bookmarks
             icon: hoarder
+        - n8n:
+            href: https://n8n.pedrocoutinho.eu
+            description: Personal automation
+            icon: mdi-graph-outline
 
   bookmarks.yaml: |
     - Code:

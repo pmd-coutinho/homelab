@@ -51,6 +51,13 @@ data:
         conditions:
           - "[STATUS] == 200"
 
+      - name: n8n
+        group: Applications
+        url: http://n8n.n8n:5678
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+
       - name: OtterWiki
         group: Applications
         url: http://otterwiki.otterwiki:8080

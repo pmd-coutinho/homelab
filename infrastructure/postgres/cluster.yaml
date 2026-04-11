@@ -20,7 +20,7 @@ spec:
     barmanObjectStore:
       destinationPath: s3://pmd-homelab-backups/postgres
       endpointURL: https://s3.eu-central-003.backblazeb2.com
-      serverName: homelab-postgres-v6
+      serverName: homelab-postgres-v7
       s3Credentials:
         accessKeyId:
           name: pg-backup-secret

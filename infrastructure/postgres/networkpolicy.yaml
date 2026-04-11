@@ -47,6 +47,20 @@ spec:
         - ports:
             - port: "443"
               protocol: TCP
+    - toEntities:
+        - cluster
+    - toEntities:
+        - kube-apiserver
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
+    - toCIDRSet:
+        - cidr: 10.96.0.1/32
+      toPorts:
+        - ports:
+            - port: "443"
+              protocol: TCP
     - toEndpoints:
         - matchLabels:
             k8s:io.kubernetes.pod.namespace: postgres

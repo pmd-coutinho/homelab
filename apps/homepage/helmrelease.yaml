@@ -21,6 +21,15 @@ spec:
         pod:
           nodeSelector:
             kubernetes.io/hostname: talos-worker
+        initContainers:
+          copy-config:
+            image:
+              repository: busybox
+              tag: latest
+            command:
+              - sh
+              - -c
+              - cp /configmap/* /config/
         containers:
           main:
             image:
@@ -41,9 +50,19 @@ spec:
           http:
             port: 3000
     persistence:
+      config:
+        type: emptyDir
+        globalMounts:
+          - path: /app/config
+        advancedMounts:
+          main:
+            copy-config:
+              - path: /config
       configmap:
         type: configMap
         name: homepage-config
-        globalMounts:
-          - path: /app/config
-            readOnly: true
+        advancedMounts:
+          main:
+            copy-config:
+              - path: /configmap
+                readOnly: true

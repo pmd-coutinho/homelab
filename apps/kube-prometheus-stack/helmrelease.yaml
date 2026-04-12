@@ -17,6 +17,7 @@ spec:
     defaultRules:
       disabled:
         KubeProxyDown: true
+        KubeMemoryOvercommit: true
     kubeProxy:
       enabled: false
     kubeControllerManager:

@@ -102,7 +102,7 @@ flux reconcile kustomization flux-system --with-source
 
 Flux will now deploy everything in dependency order:
 1. Infrastructure (Longhorn, cert-manager, Traefik, PostgreSQL, Volsync, Loki, Alloy, NFS provisioner)
-2. Apps (monitoring, Forgejo, Authelia, Vaultwarden, Hoarder, OtterWiki, Homepage, Gatus, Tailscale)
+2. Apps (monitoring, Forgejo, Authelia, Vaultwarden, Hoarder, OtterWiki, Homepage, Gatus)
 
 **Wait for infrastructure to be healthy before proceeding:** `flux get kustomizations -w`
 
@@ -112,29 +112,16 @@ Flux will now deploy everything in dependency order:
 
 PostgreSQL will start with an empty database. To restore from Barman backup:
 
-### 3.1 Modify cluster.yaml temporarily for recovery
+### 3.1 Rotate the Barman serverName before applying
 
-Replace the `bootstrap` section in `infrastructure/postgres/cluster.yaml`:
-```yaml
-spec:
-  bootstrap:
-    recovery:
-      source: homelab-postgres-backup
-  externalClusters:
-    - name: homelab-postgres-backup
-      barmanObjectStore:
-        destinationPath: s3://pmd-homelab-backups/postgres
-        endpointURL: https://s3.eu-central-003.backblazeb2.com
-        s3Credentials:
-          accessKeyId:
-            name: pg-backup-secret
-            key: ACCESS_KEY_ID
-          secretAccessKey:
-            name: pg-backup-secret
-            key: ACCESS_SECRET_KEY
-        wal:
-          compression: gzip
-```
+`infrastructure/postgres/cluster.yaml` is already wired for recovery from Barman, but **the `serverName` values must be rotated before each recovery** to avoid WAL split-brain with the pre-disaster stream:
+
+- `spec.externalClusters[0].barmanObjectStore.serverName` → set to the **current** stream you're recovering from (e.g., `homelab-postgres-v8`)
+- `spec.backup.barmanObjectStore.serverName` → set to a **new, unused** stream name (e.g., `homelab-postgres-v9`)
+
+If you leave both pointing at the same name, the recovered cluster will try to write WAL back into the stream it's reading from, which corrupts backups.
+
+Optionally remove `spec.bootstrap.recovery.recoveryTarget.backupID` to recover to the **latest** point-in-time (default) instead of a specific backup.
 
 ### 3.2 Apply and wait
 ```bash
@@ -143,8 +130,10 @@ kubectl apply -f infrastructure/postgres/cluster.yaml
 kubectl logs -n postgres -l cnpg.io/cluster=homelab-postgres -f
 ```
 
+The bootstrap creates a one-shot `...-full-recovery` pod that downloads the base backup, replays WAL, then exits. The normal `homelab-postgres-1` primary comes up afterward.
+
 ### 3.3 After recovery completes
-Revert `cluster.yaml` back to the normal `initdb` bootstrap (so Flux doesn't keep trying to recover).
+No manual edit needed — the rotated `serverName` values from step 3.1 are the new steady state. Commit them to git so Flux matches the live resource.
 
 ### 3.4 Recreate additional databases
 The Barman backup includes all databases (forgejo, authelia, vaultwarden, hoarder). If any are missing:
@@ -214,9 +203,7 @@ flux create source git flux-system \
 ```
 
 ### 5.2 Tailscale
-Generate a new auth key at https://login.tailscale.com/admin/settings/keys.
-Update the SOPS secret and restart Tailscale pod.
-Approve subnet router in Tailscale admin console.
+Tailscale runs on the **Pi-hole VM** (`192.168.50.2`), not in the cluster. See [tailscale.md](tailscale.md). If the Pi-hole VM itself was lost, reinstall per that doc. A cluster rebuild does not require any Tailscale changes.
 
 ### 5.3 Pi-hole DNS
 All DNS entries in `/etc/dnsmasq.d/homelab.conf` on 192.168.50.2 should still be intact (Pi-hole is on Proxmox, not the cluster). Verify:
@@ -263,7 +250,7 @@ kubectl get replicationsource -A
 | Prometheus metrics | No | Re-scraped (15d history lost) |
 | Loki logs | No | Re-collected (7d history lost) |
 | AlertManager state | No | Auto-recovers |
-| Tailscale identity | No | Re-register with new auth key |
+| Tailscale identity | N/A | Not in cluster — lives on Pi-hole VM, see docs/tailscale.md |
 | Meilisearch index | No | Auto-rebuilds from Hoarder data |
 | All K8s manifests + secrets | Yes | In Git (SOPS encrypted) |
 
@@ -283,3 +270,12 @@ OtterWiki currently has no Volsync backup. The wiki content is synced to Forgejo
 | Restore PostgreSQL | 10 min |
 | Restore PVC data | 15 min |
 | Post-restore manual steps | 10 min |
+
+---
+
+## Lessons learned from past outages
+
+- **VM boot order in Proxmox matters.** If the VMs boot from the Talos ISO instead of disk, they come up in maintenance mode with no hostname and no machine config, and the cluster looks completely dead. Hardware → remove or downgrade the CD-ROM device so disk is always first.
+- **Don't run Tailscale as a `hostNetwork` subnet router inside K8s.** Advertising the node's own subnet with `NET_ADMIN` corrupts the node's routing table. Tailscale lives on the Pi-hole VM — see [tailscale.md](tailscale.md).
+- **Memory limits matter more than requests on a constrained host.** With 16GB total RAM across both Talos VMs, the cluster is OOM-prone during mass pod restarts (e.g., after a reboot) because all pods initialise simultaneously and approach their limits at once. Keep controller-style workloads (Flux controllers, Volsync manager, etc.) at modest limits (~400Mi), not the 1Gi defaults.
+- **Cilium "maintenance" backend state tracks Kubernetes EndpointSlice `ready/serving`.** If a pod isn't passing its readiness probe, Cilium marks the backend as maintenance and connections fail with `operation not permitted`. This is a symptom, not the cause — always investigate the target pod's readiness before suspecting Cilium.

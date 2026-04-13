@@ -14,13 +14,11 @@ spec:
   bootstrap:
     recovery:
       source: homelab-postgres-source
-      recoveryTarget:
-        backupID: "20260410T210301"
   backup:
     barmanObjectStore:
       destinationPath: s3://pmd-homelab-backups/postgres
       endpointURL: https://s3.eu-central-003.backblazeb2.com
-      serverName: homelab-postgres-v8
+      serverName: homelab-postgres-v9
       s3Credentials:
         accessKeyId:
           name: pg-backup-secret
@@ -38,7 +36,7 @@ spec:
       barmanObjectStore:
         destinationPath: s3://pmd-homelab-backups/postgres
         endpointURL: https://s3.eu-central-003.backblazeb2.com
-        serverName: homelab-postgres
+        serverName: homelab-postgres-v8
         s3Credentials:
           accessKeyId:
             name: pg-backup-secret

@@ -3,7 +3,6 @@ kind: Kustomization
 resources:
   - kube-prometheus-stack
   - forgejo
-  - tailscale
   - authelia
   - monitoring-ingress
   - longhorn-ingress

@@ -23,6 +23,10 @@ spec:
       enabled: true
       storageClass: longhorn
       size: 20Gi
+    service:
+      ssh:
+        type: LoadBalancer
+        loadBalancerIP: 192.168.50.51
     database:
       builtIn:
         postgresql:

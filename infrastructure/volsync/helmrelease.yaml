@@ -15,11 +15,10 @@ spec:
   values:
     metrics:
       disableAuth: true
-    manager:
-      resources:
-        limits:
-          memory: 512Mi
-          cpu: 1000m
-        requests:
-          memory: 64Mi
-          cpu: 100m
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 1000m
+      requests:
+        memory: 64Mi
+        cpu: 100m

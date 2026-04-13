@@ -4,3 +4,12 @@ resources:
 - gotk-components.yaml
 - forgejo-http-auth.enc.yaml
 - gotk-sync.yaml
+patches:
+- target:
+    kind: Deployment
+    namespace: flux-system
+    labelSelector: app.kubernetes.io/part-of=flux
+  patch: |
+    - op: replace
+      path: /spec/template/spec/containers/0/resources/limits/memory
+      value: 400Mi

@@ -37,6 +37,8 @@ sysctl -p /etc/sysctl.d/99-tailscale.conf
 VERSION=1.96.4  # bump to current stable
 cd /tmp
 wget https://pkgs.tailscale.com/stable/tailscale_${VERSION}_amd64.tgz
+wget https://pkgs.tailscale.com/stable/tailscale_${VERSION}_amd64.tgz.sha256
+sha256sum -c tailscale_${VERSION}_amd64.tgz.sha256
 tar -xzf tailscale_${VERSION}_amd64.tgz
 cp tailscale_${VERSION}_amd64/tailscale /usr/bin/tailscale
 cp tailscale_${VERSION}_amd64/tailscaled /usr/sbin/tailscaled
@@ -86,6 +88,8 @@ ssh root@192.168.50.2
 VERSION=<new-version>
 cd /tmp
 wget https://pkgs.tailscale.com/stable/tailscale_${VERSION}_amd64.tgz
+wget https://pkgs.tailscale.com/stable/tailscale_${VERSION}_amd64.tgz.sha256
+sha256sum -c tailscale_${VERSION}_amd64.tgz.sha256
 tar -xzf tailscale_${VERSION}_amd64.tgz
 rc-service tailscale stop
 cp tailscale_${VERSION}_amd64/tailscale /usr/bin/tailscale
@@ -96,6 +100,8 @@ tailscale version
 ```
 
 State persists, so no re-authentication.
+
+Do not skip the `sha256sum -c` step. These binaries run as root on the Pi-hole VM.
 
 **Do not `apk add tailscale`** — it will install the old 1.76.x series and either overwrite the manual binaries or create a confused mixed state. The apk package was deliberately removed.
 

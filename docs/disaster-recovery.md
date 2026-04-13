@@ -2,7 +2,7 @@
 
 ## Context
 
-This documents every step to rebuild the entire homelab cluster from scratch — assuming total loss of both VMs but intact Proxmox host, Git repo (GitHub mirror), and Backblaze B2 backups.
+This documents every step to rebuild the entire homelab cluster from scratch — assuming total loss of both VMs but intact Proxmox host, the primary Forgejo repo plus GitHub mirror, and Backblaze B2 backups.
 
 ## Prerequisites (stored in Bitwarden)
 
@@ -27,7 +27,7 @@ Plus these credentials:
 
 ### 1.2 Generate configs and bootstrap
 ```bash
-# Clone the repo from GitHub (Forgejo is down)
+# Clone the repo from GitHub mirror for bootstrap (Forgejo may still be down)
 git clone git@github.com:pmd-coutinho/homelab.git
 cd homelab
 
@@ -78,7 +78,7 @@ Wait for nodes to become Ready: `kubectl get nodes -w`
 
 ## Phase 2: Bootstrap Flux (~5 min)
 
-### 2.1 Bootstrap from GitHub (Forgejo is down)
+### 2.1 Bootstrap from GitHub mirror
 ```bash
 flux bootstrap github \
   --owner=pmd-coutinho \
@@ -105,6 +105,30 @@ Flux will now deploy everything in dependency order:
 2. Apps (monitoring, Forgejo, Authelia, Vaultwarden, Hoarder, OtterWiki, Homepage, Gatus)
 
 **Wait for infrastructure to be healthy before proceeding:** `flux get kustomizations -w`
+
+### 2.4 Repoint Flux back to Forgejo after Forgejo is healthy
+
+GitHub is only the bootstrap path here. The steady-state Flux source is internal Forgejo.
+
+After Forgejo is up and serving the current repo state, verify or restore the live source:
+
+```bash
+kubectl -n flux-system get gitrepository flux-system -o jsonpath='{.spec.url}{"\n"}'
+```
+
+Expected value:
+
+```text
+http://forgejo-http.forgejo.svc.cluster.local:3000/pmd-coutinho/homelab.git
+```
+
+If it is not pointing there, re-apply the repo-owned Flux manifests instead of creating an ad hoc source:
+
+```bash
+kubectl apply -k clusters/homelab/flux-system
+flux reconcile source git flux-system
+flux reconcile kustomization flux-system --with-source
+```
 
 ---
 
@@ -193,13 +217,25 @@ kubectl scale deploy/<app> -n <ns> --replicas=1
 
 ## Phase 5: Post-Restore Manual Steps (~10 min)
 
-### 5.1 Keep Flux source on GitHub
-After recovery, ensure Flux keeps tracking the GitHub repository:
+### 5.1 Keep Flux source on Forgejo
+After recovery, ensure Flux has moved back to the repo-owned internal Forgejo source:
+
 ```bash
-flux create source git flux-system \
-  --url=https://github.com/pmd-coutinho/homelab.git \
-  --branch=main \
-  --interval=1m
+kubectl -n flux-system get gitrepository flux-system -o jsonpath='{.spec.url}{"\n"}'
+```
+
+Expected value:
+
+```text
+http://forgejo-http.forgejo.svc.cluster.local:3000/pmd-coutinho/homelab.git
+```
+
+If it drifted, re-apply the repo manifests:
+
+```bash
+kubectl apply -k clusters/homelab/flux-system
+flux reconcile source git flux-system
+flux reconcile kustomization flux-system --with-source
 ```
 
 ### 5.2 Tailscale
